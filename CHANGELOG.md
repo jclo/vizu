@@ -1,8 +1,9 @@
 ### HEAD
 
-### 0.x.x (June 20, 2017)
+### 0.0.x (June 20, 2017)
 
   * Added the missing lodash module to package.json,
+  * Updated the dependencies,
   * ...,
 
 

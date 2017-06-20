@@ -55,7 +55,7 @@ export default function(dom) {
       { '<Ccc />': Ccc },
       dom.window.document.getElementById('app30'),
     );
-    it('Expects the method do not fail.', () => {
+    it('Expects the method not to fail.', () => {
       Vizu.replace();
       expect(true).to.be.true;
     });
@@ -67,7 +67,7 @@ export default function(dom) {
       { '<Ccc />': Ccc },
       dom.window.document.getElementById('app31'),
     );
-    it('Expects the method do not fail.', () => {
+    it('Expects the method not to fail.', () => {
       Vizu.replace({});
       expect(true).to.be.true;
     });
@@ -83,13 +83,13 @@ export default function(dom) {
     const cloneView = _.cloneDeep(view);
     Vizu.replace(view, []);
 
-    it('Expects the method do not fail.', () => {
+    it('Expects the method not to fail.', () => {
       expect(true).to.be.true;
     });
-    it('Expects the method do not alter the id of the component.', () => {
+    it('Expects the method not to alter the id of the component.', () => {
       expect(view.Ccc.id).to.be.equal(cloneView.Ccc.id);
     });
-    it('Expects the method do not alter the id of the child component.', () => {
+    it('Expects the method not to alter the id of the child component.', () => {
       expect(view.Ccc.components.Aaa.id).to.be.equal(cloneView.Ccc.components.Aaa.id);
     });
   });
@@ -105,10 +105,10 @@ export default function(dom) {
     const cloneView = _.cloneDeep(view);
     Vizu.replace(view, { '<Bbb />': Bbb });
 
-    it('Expects the method do not alter the id of the component.', () => {
+    it('Expects the method not to alter the id of the component.', () => {
       expect(view.Ccc.id).to.be.equal(cloneView.Ccc.id);
     });
-    it('Expects the method do not alter the id of the child component.', () => {
+    it('Expects the method not to alter the id of the child component.', () => {
       expect(view.Ccc.components.Aaa.id).to.be.equal(cloneView.Ccc.components.Aaa.id);
     });
   });
@@ -122,11 +122,11 @@ export default function(dom) {
     const cloneView = _.cloneDeep(view);
     Vizu.replace(view, { '<Aaa />': Bbb });
 
-    it('Expects the method do not alter the id of the component.', () => {
+    it('Expects the method not to alter the id of the component.', () => {
       expect(view.Ccc.id).to.be.equal(cloneView.Ccc.id);
     });
 
-    it('Expects the method do alter the id of the child component.', () => {
+    it('Expects the method to alter the id of the child component.', () => {
       expect(view.Ccc.components.Aaa.id).not.to.be.equal(cloneView.Ccc.components.Aaa.id);
     });
 
@@ -144,7 +144,7 @@ export default function(dom) {
     const cloneView = _.cloneDeep(view);
     Vizu.replace(view, { '<Ccc />': Aaa });
 
-    it('Expects the method do alter the id of the component.', () => {
+    it('Expects the method to alter the id of the component.', () => {
       expect(view.Ccc.id).not.to.be.equal(cloneView.Ccc.id);
     });
 
