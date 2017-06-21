@@ -1,6 +1,6 @@
 {
   "name": "vizu",
-  "version": "0.0.1",
+  "version": "0.0.2beta1",
   "description": "A Javascript View library for building web and hybrid mobile applications",
   "bin": {},
   "main": "_dist/vizu-min.js",
@@ -37,7 +37,6 @@
     "babel-core": "6.25.0",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-istanbul": "4.1.4",
-    "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-latest": "6.24.1",
     "babelify": "7.3.0",
     "browserify": "14.4.0",
@@ -69,11 +68,7 @@
   },
   "browser": {},
   "browserify-shim": {},
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
+  "browserify": {},
   "engines": {
     "node": ">=4.0.0"
   }

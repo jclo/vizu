@@ -18,7 +18,15 @@ module.exports = {
   lib: './lib',
   exportname: 'Vizu',   // the name to expose outside the lib,
   debug: true,
-
+  babel: {
+    presets: ['latest'],
+    plugins: ['add-module-exports'],
+    env: {
+      test: {
+        plugins: ['istanbul'],
+      },
+    },
+  },
   license: ['/**',
     ` * ${name} v${release}`,
     ' *',

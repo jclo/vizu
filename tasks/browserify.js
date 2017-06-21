@@ -1,10 +1,12 @@
-/* eslint one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0 */
+/* eslint one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0,
+  max-len: [1, 130, 0] */
 /* eslint strict: 0 */
 
 'use strict';
 
 // -- Node modules
-const browserify   = require('browserify')
+const babelify     = require('babelify')
+    , browserify   = require('browserify')
     , del          = require('del')
     , gulp         = require('gulp')
     , replace      = require('gulp-replace')
@@ -21,12 +23,13 @@ const config = require('./config')
   ;
 
 // -- Local constants
-const srcfile = config.srcfile
-    , debug = config.debug
+const srcfile    = config.srcfile
+    , babel      = config.babel
+    , debug      = config.debug
     , exportname = config.exportname
-    , name = config.name
-    , release = config.release
-    , lib = config.lib
+    , name       = config.name
+    , release    = config.release
+    , lib        = config.lib
     ;
 
 
@@ -46,7 +49,8 @@ gulp.task('removelib', function() {
 // Browserify:
 gulp.task('browserify-int', function() {
   // Set up the browserify instance.
-  const b = browserify({ entries: srcfile, debug, standalone: exportname });
+  const b = browserify({ entries: srcfile, debug, standalone: exportname })
+              .transform(babelify, { presets: babel.presets, plugins: babel.plugins });
 
   return b.bundle()
     // Log errors if they happen.
@@ -69,9 +73,8 @@ gulp.task('watchify-int', function() {
   // Set up the browserify instance:
   // process.env.BROWSERIFYSWAP_ENV = 'dist';
   // process.env.NODE_ENV = 'production';
-  const b = watchify(browserify({ entries: srcfile, debug }, watchify.args));
-  // Exclude jquery from backbone as we use zepto:
-  b.exclude('jquery');
+  const b = browserify({ entries: srcfile, debug, standalone: exportname, cache: {}, packageCache: {}, plugin: [watchify] })
+              .transform(babelify, { presets: babel.presets, plugins: babel.plugins });
 
   function build() {
     b.bundle()
