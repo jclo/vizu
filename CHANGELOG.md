@@ -3,7 +3,7 @@
 ### 0.0.2 (June 21, 2017)
 
   * Reworked the browserify build to prevent a parent module to 'rebabelify' the module,
-  * ...,
+  * Release.
 
 
 ### 0.0.1 (June 20, 2017)
