@@ -1,4 +1,4 @@
-
+/* eslint indent: ["error", 2, { "VariableDeclarator": { "var": 1, "let": 1, "const": 2 } }] */
 /* eslint one-var: 0, prefer-arrow-callback: 0*/
 /* eslint strict: 0 */
 

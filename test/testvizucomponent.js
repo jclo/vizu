@@ -105,4 +105,29 @@ export default function(dom) {
       expect(view.Ccc.$('h1').text()).to.be.equal('Hello');
     });
   });
+
+  describe('Test the method Component.$().css():', () => {
+    const view = Vizu.render(
+      '<Ccc />',
+      { '<Ccc />': Ccc },
+      dom.window.document.getElementById('app44'),
+    );
+    it('Expects the method $().css() without any argument to return undefined.', () => {
+      expect(view.Ccc.$().css()).to.be.undefined;
+    });
+
+    it('Expects the method $().css("color") to return an empty string.', () => {
+      expect(view.Ccc.$().css('color')).to.be.a('string').that.has.lengthOf(0);
+    });
+
+    it('Expects the method $().css("font-size", "400")/$().css("font-size") to return "400".', () => {
+      view.Ccc.$().css('font-size', '400');
+      expect(view.Ccc.$().css('font-size')).to.be.a('string').that.is.equal('400');
+    });
+
+    it('Expects the method $().css("border-bottom-color", "blue")/$().css("border-bottom-color") to return "blue".', () => {
+      view.Ccc.$().css('border-bottom-color', 'blue');
+      expect(view.Ccc.$().css('border-bottom-color')).to.be.a('string').that.is.equal('blue');
+    });
+  });
 }

@@ -1,6 +1,6 @@
 /* global document */
-/* */
-
+/* eslint indent: ["error", 2, { "VariableDeclarator": { "var": 1, "let": 1, "const": 2 } }] */
+/* eslint one-var: 0 */
 // -- Vendor modules
 
 // -- Local modules
@@ -22,7 +22,6 @@ import Vizu from './vizu';
 * @namespace vizu
 */
 class Component {
-
 /**
  * Creates an unique ID for this component.
  *
@@ -54,16 +53,16 @@ class Component {
     this.props.options = {};
   }
 
-/**
- * Returns the the first element that matches the specified CSS selector(s).
- *
- * @method (arg1)
- * @public
- * @param {String}    the CSS selector(s),
- * @returns {Object}  returns the first element that matches a specified
- *                    CSS selector(s),
- * @since 0.0.0
- */
+  /**
+   * Returns the the first element that matches the specified CSS selector(s).
+   *
+   * @method (arg1)
+   * @public
+   * @param {String}    the CSS selector(s),
+   * @returns {Object}  returns the first element that matches a specified
+   *                    CSS selector(s),
+   * @since 0.0.0
+   */
   $(el) {
     const that = this;
 
@@ -176,6 +175,40 @@ class Component {
       return getElement().textContent;
     };
 
+    /**
+     * Gets/Sets the style attribute of the element,
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {String}    the style attribute,
+     * @param {String}    the style attribute value,
+     * @returns {String}  undefined or the style attribute value,
+     * @since 0.0.3
+     */
+    const css = function(styleAttr, value) {
+      const arr = typeof styleAttr === 'string' ? styleAttr.split('-') : [];
+      let attr = '';
+
+      // Convert style attribute name with '-' (ex.: 'font-size' to 'fontSize'):
+      for (let i = 0; i < arr.length; i++) {
+        if (i === 0) {
+          attr += arr[i];
+        } else {
+          attr += arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+        }
+      }
+
+      if (!value) {
+        // Get attribute:
+        return getElement().style[attr];
+      }
+
+      // Set attribute:
+      getElement().style[attr] = value;
+      return undefined;
+    };
+
+
     return {
       id: getElement() ? getElement().id : null,
       getElement,
@@ -185,6 +218,7 @@ class Component {
       toggleClass,
       html,
       text,
+      css,
     };
   }
 

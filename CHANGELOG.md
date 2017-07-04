@@ -1,5 +1,12 @@
 ### HEAD
 
+### 0.0.3 (July 4, 2017)
+
+  * Added the method Component.$().css(),
+  * Added the method Vizu.createClass() to create components without using class,
+  * ...,
+
+
 ### 0.0.2 (June 21, 2017)
 
   * Reworked the browserify build to prevent a parent module to 'rebabelify' the module,

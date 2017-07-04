@@ -468,31 +468,24 @@ A `Vizu Web Component` is a class object that extends the class `Component` of `
 
 #### $()
 
-  * `$().getElement()`: returns the selected child element of the `Vizu Web Component`.
-
-  `$().getElement()` returns the whole DOM element of the selected `Vizu Web Component` while `$(el).getElement()` returns the  `el` child element.
-
-  * `$().id`: returns the `id` of the selected `Vizu Web Component` while `$(el).id` returns the `id` of the `el` child element (if any).
-
-  * `$(el).getClassList()`: returns a `DOMTokenList`. `getClassList()` is a wrapper around `classList`.
-
-  * `$(el).addClass('className')`: adds this class to the `el` child element.
-
-  * `$(el).removeClass('className')`: removes this class to the `el` child element.
-
-  * `$(el).toggleClass('className')`: adds or removes this class to the `el` child element.
-
-  * `$().html()`: returns the child element of the selected `Vizu Web Component`.
-
-  * `$(el).html()`: returns the child element of the `el` element.
-
-  * `$().html('<h1>Title</h1>')`: replaces the child element of the `Vizu Web Component` by `<h1>Title</h1>`.
-
-  * `$(el).html('<h1>Title</h1>')`: adds the child element `<h1>Title</h1>` to the `el` child element.
-
-  * `$(el).text()`: returns the contents of the `el` child element.
-
-  * `$(el).text('aaa')`: replaces the contents of the `el` child element by `aaa`.
+```
+Method                          | Description
+```
+```
+$().getElement()                | returns the selected child element of the Vizu Web Component.*/
+                                | $().getElement() returns the whole DOM element of the selected Vizu Web Component while $(el).getElement() returns the el child element.
+$().id                          | returns the id of the selected Vizu Web Component while $(el).id returns the id of the el child element (if any).
+$(el).getClassList()            | returns a DOMTokenList. getClassList() is a wrapper around classList.
+$(el).addClass('className')     | adds this class to the el child element.
+$(el).removeClass('className')  | removes this class to the el child element.
+$(el).toggleClass('className')  | adds or removes this class to the el child element.
+$().html()                      | returns the child element of the selected Vizu Web Component.
+$(el).html()                    | returns the child element of the el element.
+$().html('<h1>Title</h1>')      | replaces the child element of the Vizu Web Component by <h1>Title</h1>.
+$(el).html('<h1>Title</h1>')    | adds the child element <h1>Title</h1> to the el child element.
+$(el).text()                    | returns the contents of the el child element.
+$(el).text('aaa')               | replaces the contents of the el child element by aaa.
+```
 
 
 ### Vizu Render

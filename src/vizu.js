@@ -1,10 +1,13 @@
 /* global document */
-/* eslint one-var: 0, no-param-reassign: 0, max-len: [1, 110],
-  no-unused-expressions: ["error", { "allowTernary": true }] */
+/* eslint indent: ["error", 2, { "VariableDeclarator": { "var": 1, "let": 1, "const": 2 } }] */
+/* eslint one-var: 0, no-param-reassign: 0, max-len: [1, 130],
+  no-unused-expressions: ["error", { "allowTernary": true }], no-underscore-dangle: 0,
+  no-proto: 1, prefer-rest-params: 1 */
 
 // -- Vendor modules
 
 // -- Local modules
+import Component from './component';
 
 // -- Global constants (in the scope of this module)
 
@@ -40,6 +43,89 @@ const explore = function(view, tag) {
   return null;
 };
 
+
+/**
+ * Code reused from Babel
+ */
+const _createClass = (function() {
+  function defineProperties(target, props) {
+    for (let i = 0; i < props.length; i++) {
+      const descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true;
+      if ('value' in descriptor) {
+        descriptor.writable = true;
+      }
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function(Constructor, protoProps, staticProps) {
+    if (protoProps) {
+      defineProperties(Constructor.prototype, protoProps);
+    }
+    if (staticProps) {
+      /* istanbul ignore next */
+      defineProperties(Constructor, staticProps);
+    }
+    return Constructor;
+  };
+}());
+
+/**
+ * Code reused from Babel
+ */
+const _possibleConstructorReturn = function(self, call) {
+  if (!self) {
+    /* istanbul ignore next */
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+};
+
+/**
+ * Code reused from Babel
+ */
+const _inherits = function(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    /* istanbul ignore next */
+    throw new TypeError(`Super expression must either be null or a function, not ${typeof superClass}`);
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true,
+    } });
+
+  if (superClass) {
+    Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+};
+
+/**
+ * Code reused from Babel
+ */
+const _classCallCheck = function(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    /* istanbul ignore next */
+    throw new TypeError('Cannot call a class as a function');
+  }
+};
+
+/**
+ * Code reused from Babel
+ */
+const _subClass = function(SuperClass, m) {
+  function SubClass() {
+    _classCallCheck(this, SubClass);
+    return _possibleConstructorReturn(this, (SubClass.__proto__ || Object.getPrototypeOf(SubClass)).apply(this, arguments));
+  }
+  _inherits(SubClass, SuperClass);
+
+  _createClass(SubClass, m);
+
+  return SubClass;
+};
 
 // -- Public Methods -----------------------------------------------------------
 
@@ -130,16 +216,6 @@ const Vizu = {
    * @returns {}        -,
    * @since 0.0.0
    */
-  /**
-   * Replaces a component with another component having the same tag.
-   *
-   * @method (arg1, arg2)
-   * @public
-   * @param {Object}    the view object,
-   * @param {Object}    the new component ({ '<Aaa />': 'new class' }),
-   * @returns {}        -,
-   * @since 0.0.0
-   */
   replace(view, component) {
     let id
       , type
@@ -195,6 +271,34 @@ const Vizu = {
       }
       path.cList[newctag] = component[newctag];
     }
+  },
+
+  /**
+   * Extends the class Component.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}    the methods to add to Component,
+   * @returns {Object}  returns the extended class component,
+   * @since 0.0.3
+   */
+  createClass(methods) {
+    // Check that methods is an object:
+    if (Object.prototype.toString.call(methods) !== '[object Object]') {
+      return null;
+    }
+
+    // Extract keys:
+    const keys = Object.keys(methods);
+    const o = [];
+    for (let i = 0; i < keys.length; i++) {
+      o.push({
+        key: keys[i],
+        value: methods[keys[i]],
+      });
+    }
+
+    return _subClass(Component, o);
   },
 };
 

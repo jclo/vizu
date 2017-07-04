@@ -12,6 +12,7 @@ import testVizuRenderext from './testvizurenderext';
 import testVizuRenderext2 from './testvizurenderext2';
 import testVizuReplace from './testvizureplace';
 import testVizuComponent from './testvizucomponent';
+import testVizuCreateClass from './testvizucreateclass';
 
 // -- Local constants
 // Create a Virtual DOM:
@@ -44,6 +45,8 @@ const HTML = `
       <div id="app43"></div>
       <div id="app44"></div>
       <div id="app45"></div>
+
+      <div id="app50"></div>
     </body>
   </html>
 `;
@@ -77,6 +80,10 @@ describe('Vizu', () => {
 
     describe('Test the method $():', () => {
       testVizuComponent(dom);
+    });
+
+    describe('Test the method createClass():', () => {
+      testVizuCreateClass(dom);
     });
   });
 });
