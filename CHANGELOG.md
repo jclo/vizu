@@ -4,6 +4,8 @@
 
   * Added the method Component.$().css(),
   * Added the method Vizu.createClass() to create components without using class,
+  * Fixed eslint packages incompatibilities,
+  * Updated the README.md file,
   * ...,
 
 

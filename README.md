@@ -72,7 +72,7 @@ The method `Vizu.render()` renders the `Vizu Web Components` directly in the DOM
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Vizu](#vizu)
-	- [A Javascript Companion View library for building web and hybrid mobile applications](#a-javascript-companion-view-library-for-building-web-and-hybrid-mobile-applications)
+	- [A Javascript View library for building web and hybrid mobile applications](#a-javascript-view-library-for-building-web-and-hybrid-mobile-applications)
 	- [Overview](#overview)
 		- [Create a Vizu Web Component](#create-a-vizu-web-component)
 		- [Create a View](#create-a-view)
@@ -88,6 +88,7 @@ The method `Vizu.render()` renders the `Vizu Web Components` directly in the DOM
 		- [A Composite Vizu Web Component](#a-composite-vizu-web-component)
 		- [Define an Initial State for the Vizu Web Component](#define-an-initial-state-for-the-vizu-web-component)
 		- [Extend the Vizu Web Component with new methods](#extend-the-vizu-web-component-with-new-methods)
+		- [Create Vizu Web Component without ES6 classes](#create-vizu-web-component-without-es6-classes)
 		- [Résumé](#rsum)
 	- [Interact with the Vizu Web Components](#interact-with-the-vizu-web-components)
 		- [The Variables](#the-variables)
@@ -98,10 +99,10 @@ The method `Vizu.render()` renders the `Vizu Web Components` directly in the DOM
 			- [$()](#)
 		- [Vizu Render](#vizu-render)
 		- [Vizu Replace](#vizu-replace)
+		- [Vizu createClass](#vizu-createclass)
 	- [License](#license)
 
 <!-- /TOC -->
-
 
 ## Installation
 
@@ -351,6 +352,28 @@ If the method `$().getElement()` has no selector (argument), it returns the enti
 `Component` implements a few shortcuts (see the reference section). For instance `$('h1').getElement().innerText` can be replaced by `$('h1').text()`.
 
 
+### Create Vizu Web Component without ES6 classes
+
+`Vizu` provides the method `createClass` to create `Vizu Web Components` without ES6:
+
+```js
+Vizu.createClass({
+
+  getInitialState: function() {
+    this.title = 'Title';
+  },
+
+  render: function() {
+    return `
+      <div>
+        <h1>${this.title}</h1>
+      </div>
+    `;
+  }
+});
+
+```
+
 ### Résumé
 
 A `Vizu Web Component` is a Javascript class that extends the `Vizu` class `Component`.
@@ -435,9 +458,6 @@ Vizu.replace(view, { '<Bbb />': Ccc });
 ```
 
 You just need to call the method `Vizu.replace`. The first argument is the `view` object and the second argument is an object whose property is the tag of the web component to replace and the value is the reference to the new `Vizu Web Component`.
-
-
-
 
 
 ## Reference
@@ -568,6 +588,21 @@ Example:
 
 It means: I want to replace the `Vizu Web Component` linked to the tag `<Aaa />` by the `Vizu Web Component` referenced by `Bbb` (the class Bbb).
 
+
+### Vizu createClass
+
+`Vizu` implements the method `createClass` to create a `Vizu Web Component` without ES6 classes.
+
+```js
+Vizu.createClass({
+
+  getInitialState: function() {
+  },
+
+  render: function() {
+  }
+});
+```
 
 
 ## License
