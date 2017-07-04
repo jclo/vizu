@@ -6,7 +6,7 @@
   * Added the method Vizu.createClass() to create components without using class,
   * Fixed eslint packages incompatibilities,
   * Updated the README.md file,
-  * ...,
+  * Release.
 
 
 ### 0.0.2 (June 21, 2017)

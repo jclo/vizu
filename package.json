@@ -1,6 +1,6 @@
 {
   "name": "vizu",
-  "version": "0.0.3beta1",
+  "version": "0.0.3",
   "description": "A Javascript View library for building web and hybrid mobile applications",
   "bin": {},
   "main": "_dist/vizu-min.js",
