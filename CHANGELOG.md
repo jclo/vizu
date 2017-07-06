@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.x (July 6, 2017)
+
+  * Added a link to Kiwii-Vizu in the README.md file,
+  * ...,
+
+
 ### 0.0.3 (July 4, 2017)
 
   * Added the method Component.$().css(),

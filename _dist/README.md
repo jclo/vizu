@@ -20,6 +20,9 @@
 
 `Vizu` is just old plain Javascript, HTML and CSS3. There is neither intermediate format nor pre-processing.
 
+You want to see how to use `Vizu` in a real application, click [here](https://github.com/jclo/kiwii-vizu). `Kiwii-Vizu` is an example of an hybrid mobile application built with `Vizu` as the View library.
+
+
 ## Overview
 
 ### Create a Vizu Web Component
