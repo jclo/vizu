@@ -4,7 +4,7 @@
 
   * Added a link to Kiwii-Vizu in the README.md file,
   * Added the methods $().empty() and $().append(),
-  * ...,
+  * Release.
 
 
 ### 0.0.3 (July 4, 2017)
