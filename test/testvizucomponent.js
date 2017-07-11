@@ -130,4 +130,35 @@ export default function(dom) {
       expect(view.Ccc.$().css('border-bottom-color')).to.be.a('string').that.is.equal('blue');
     });
   });
+
+  describe('Test the method Component.$().empty():', () => {
+    const view = Vizu.render(
+      '<Ccc />',
+      { '<Ccc />': Ccc },
+      dom.window.document.getElementById('app45'),
+    );
+    it('Expects view.Ccc.$("h1").text() to return "Hi!".', () => {
+      expect(view.Ccc.$('h1').text()).to.be.equal('Hi!');
+    });
+    it('Expects view.Ccc.$("h1").empty() to remove "Hi!".', () => {
+      view.Ccc.$('h1').empty();
+      expect(view.Ccc.$('h1').text()).to.be.equal('');
+    });
+    it('Expects view.Ccc.$().empty() to remove "h1" childnode.', () => {
+      view.Ccc.$().empty();
+      expect(view.Ccc.$('h1').getElement()).to.be.null;
+    });
+  });
+
+  describe('Test the method Component.$().append():', () => {
+    const view = Vizu.render(
+      '<Ccc />',
+      { '<Ccc />': Ccc },
+      dom.window.document.getElementById('app46'),
+    );
+    it('Expects view.Ccc.$().append("<h2>Hello!</h2>") adds this node as the last child', () => {
+      view.Ccc.$().append('<h2>Hello!</h2>');
+      expect(view.Ccc.$().getElement().lastChild.textContent).to.be.equal('Hello!');
+    });
+  });
 }

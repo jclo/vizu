@@ -1,8 +1,9 @@
 ### HEAD
 
-### 0.0.x (July 6, 2017)
+### 0.0.4 (July 11, 2017)
 
   * Added a link to Kiwii-Vizu in the README.md file,
+  * Added the methods $().empty() and $().append(),
   * ...,
 
 

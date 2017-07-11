@@ -208,6 +208,34 @@ class Component {
       return undefined;
     };
 
+    /**
+     * Removes all the childs of the current node.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {}        -,
+     * @since 0.0.4
+     */
+    const empty = function() {
+      const node = getElement();
+      while (node.firstChild) {
+        node.removeChild(node.firstChild);
+      }
+    };
+
+    /**
+     * Appends an HTML string after the last child of the current node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {}        -,
+     * @since 0.0.4
+     */
+    const append = function(htmlstring) {
+      getElement().insertAdjacentHTML('beforeend', htmlstring);
+    };
 
     return {
       id: getElement() ? getElement().id : null,
@@ -219,6 +247,8 @@ class Component {
       html,
       text,
       css,
+      empty,
+      append,
     };
   }
 
