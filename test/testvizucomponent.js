@@ -29,6 +29,29 @@ class Ccc extends Component {
   }
 }
 
+class Ddd extends Component {
+  getInitialState() {
+    this.props.options.title = 'Hello!';
+  }
+
+  events() {
+    const listener = function() {
+      //
+    };
+    this.$('.plus').on('click', listener);
+    this.$('.plus').off('click', listener);
+  }
+
+  render() {
+    return `
+      <div class='ccc eee fff'>
+        <h1 class='title'>${this.props.options.title}</h1>
+        <button class='plus'>+</button>
+      </div>
+    `;
+  }
+}
+
 // -- Main
 export default function(dom) {
   describe('Test the method Component.$().id:', () => {
@@ -159,6 +182,18 @@ export default function(dom) {
     it('Expects view.Ccc.$().append("<h2>Hello!</h2>") adds this node as the last child', () => {
       view.Ccc.$().append('<h2>Hello!</h2>');
       expect(view.Ccc.$().getElement().lastChild.textContent).to.be.equal('Hello!');
+    });
+  });
+
+  // This should be improved!
+  describe('Test the methods Component.$().on() and Component.$().off():', () => {
+    Vizu.render(
+      '<Ddd />',
+      { '<Ddd />': Ddd },
+      dom.window.document.getElementById('app47'),
+    );
+    it('Expects the component "Ddd" to be rendered.', () => {
+      expect(true).to.be.true;
     });
   });
 }

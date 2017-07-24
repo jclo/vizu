@@ -1,5 +1,12 @@
 ### HEAD
 
+### 0.0.5 (July 24, 2017)
+
+  * Added the method events() to Component,
+  * Added the event methods $().on() and $().off,
+  * ...,
+
+
 ### 0.0.4 (July 11, 2017)
 
   * Added a link to Kiwii-Vizu in the README.md file,

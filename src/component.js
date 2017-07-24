@@ -237,6 +237,34 @@ class Component {
       getElement().insertAdjacentHTML('beforeend', htmlstring);
     };
 
+    /**
+     * Attachs an event listener to the current node.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {String}    the DOM event string,
+     * @param {Function}  the listner function,
+     * @returns {}        -,
+     * @since 0.0.5
+     */
+    const on = function(event, listener) {
+      getElement().addEventListener(event, listener);
+    };
+
+    /**
+     * Removes an event listener from the current node.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {String}    the DOM event string,
+     * @param {Function}  the listner function,
+     * @returns {}        -,
+     * @since 0.0.5
+     */
+    const off = function(event, listener) {
+      getElement().removeEventListener(event, listener);
+    };
+
     return {
       id: getElement() ? getElement().id : null,
       getElement,
@@ -249,7 +277,25 @@ class Component {
       css,
       empty,
       append,
+      on,
+      off,
     };
+  }
+
+  /**
+   * Attaches event(s) to the given node.
+   *
+   * @method (arg1, arg2)
+   * @public
+   * @param {String}    the DOM event name,
+   * @param {Function}  the event listener,
+   * @returns {Funtion} returns this,
+   * @since 0.0.5
+   */
+  /* istanbul ignore next */
+  events() {
+    // Just to avoid eslint error!
+    return this;
   }
 
   /**
@@ -270,7 +316,7 @@ class Component {
    * Processes the web component to convert child(s) to plain HTML.
    *
    * @method ()
-   * @public
+   * @private
    * @param {}          -,
    * @returns {String}  returns the web component,
    * @since 0.0.0
@@ -304,6 +350,19 @@ class Component {
     }
     // Return the rendered web component:
     return t;
+  }
+
+  /**
+   * Processes the web component events.
+   *
+   * @method ()
+   * @private
+   * @param {}          -,
+   * @returns {}        -,
+   * @since 0.0.5
+   */
+  get evented() {
+    this.events();
   }
 }
 

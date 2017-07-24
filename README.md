@@ -93,6 +93,7 @@ The method `Vizu.render()` renders the `Vizu Web Components` directly in the DOM
 		- [Extend the Vizu Web Component with new methods](#extend-the-vizu-web-component-with-new-methods)
 		- [Create Vizu Web Component without ES6 classes](#create-vizu-web-component-without-es6-classes)
 		- [Résumé](#rsum)
+	- [Adds events to Vizu Web Component](#adds-events-to-vizu-web-component)
 	- [Interact with the Vizu Web Components](#interact-with-the-vizu-web-components)
 		- [The Variables](#the-variables)
 		- [The methods](#the-methods)
@@ -390,6 +391,48 @@ A `Vizu Web Component` can provides the method `getInitialState` that defines so
 A `Vizu Web Component` can be extended with specific methods.
 
 
+## Adds events to Vizu Web Component
+
+`Vizu Web Component` implements the method `events()` that is executed when the component is rendered in the DOM tree to attach events.
+
+Example for a counter:
+```js
+import { Component } from 'vizu';
+
+class Counter extends Component {
+
+  getInitialState() {
+    this.props.options.counter = 0;
+  }
+
+  events() {
+    const self = this;
+    let counter = this.props.options.counter;
+    // Increment:
+    this.$('.plus').on('click', () => {
+      counter += 1;
+      self.$('h1').text(counter);
+    });
+    // Decrement:
+    this.$('.minus').on('click', () => {
+      counter -= 1;
+      self.$('h1').text(counter);
+    });
+  }
+
+  render() {
+    return `
+      <div>
+        <h1>${this.props.options.counter}</h1>
+        <button class="minus">-</button>
+        <button class="plus">+</button>
+      </div>
+    `;
+  }
+}
+```
+
+
 ## Interact with the Vizu Web Components
 
 When the view is rendered, `Vizu` returns an object on this view:
@@ -475,16 +518,20 @@ class <new component> extends Component {
   }
   $() {
   }
+  events() {
+  }
   render() {
   }
 }
 ```
 
-A `Vizu Web Component` is a class object that extends the class `Component` of `Vizu`. It implements three methods:
+A `Vizu Web Component` is a class object that extends the class `Component` of `Vizu`. It implements four methods:
 
   * `getInitialState`: this method is executed before the component is rendered. It initializes Javascript variables at their initial value.
 
   * `$`: this method interacts with the DOM elements of the selected `Vizu Web Component`. `$` is a wrapper around the Javascript function `querySelector` and it implements a few functions (see below).
+
+  * `events`: this method attaches events to the component when it is rendered in the DOM tree.
 
   * `render`: this method returns the component defined in a string by HTML tags.
 
@@ -508,6 +555,10 @@ $().html('<h1>Title</h1>')      | replaces the child element of the Vizu Web Com
 $(el).html('<h1>Title</h1>')    | adds the child element <h1>Title</h1> to the el child element.
 $(el).text()                    | returns the contents of the el child element.
 $(el).text('aaa')               | replaces the contents of the el child element by aaa.
+$(el).empty()                   | removes all the child nodes.
+$(el).append(hml)               | adds the HTML string after the last child node.
+$(el).on(event, listener)       | adds an event listener to the selected child.
+$(el).off(event, listener)      | removes the attached event listener from the selected child.
 ```
 
 

@@ -43,6 +43,35 @@ const explore = function(view, tag) {
   return null;
 };
 
+/**
+ * Attaches events to the rendered components.
+ *
+ * @function (arg1)
+ * @private
+ * @param {Object}    the view object,
+ * @returns {}        -,
+ */
+const attachEvents = function(view) {
+  /* eslint-disable no-unused-expressions */
+  if (view.cList) {
+    const keys = Object.keys(view.cList);
+    let fn;
+
+    for (let i = 0; i < keys.length; i++) {
+      if (!view.components) {
+        // Extract components at the first level:
+        fn = view[keys[i].replace(/[^a-zA-z0-9]/g, '')];
+      } else {
+        // Extract components at levels n + 1:
+        fn = view.components[keys[i].replace(/[^a-zA-z0-9]/g, '')];
+      }
+      // Run Component events function:
+      fn.evented;
+      // Process sub components recursively:
+      attachEvents(fn);
+    }
+  }
+}; /* eslint-enable no-unused-expressions */
 
 /**
  * Code reused from Babel
@@ -199,6 +228,11 @@ const Vizu = {
       el = Vizu.vdom ? Vizu.vdom.window.document.body : document.body;
       el.innerHTML = +t;
     }
+
+    // Attach event(s)
+    // parse all components and for each component execute evented!
+    attachEvents(view);
+
     // Attach parent element:
     view.el = el;
 
