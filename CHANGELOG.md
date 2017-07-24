@@ -4,7 +4,7 @@
 
   * Added the method events() to Component,
   * Added the event methods $().on() and $().off,
-  * ...,
+  * Release.
 
 
 ### 0.0.4 (July 11, 2017)
