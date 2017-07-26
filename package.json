@@ -1,6 +1,6 @@
 {
   "name": "vizu",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Javascript View library for building web and hybrid mobile applications",
   "bin": {},
   "main": "_dist/vizu-min.js",
@@ -9,7 +9,7 @@
     "watch": "gulp watch",
     "makedist": "gulp",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov _mocha ./test/main.js --compilers js:babel-core/register",
-    "check-coverage": "nyc check-coverage --statements 98 --branches 78 --functions 100 --lines 98",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 83 --functions 100 --lines 100",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "report": "nyc report",

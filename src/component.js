@@ -8,11 +8,6 @@ import Vizu from './vizu';
 
 // -- Global constants (in the scope of this module)
 
-// -- Global variables (in the scope of this module)
-
-
-// -- Private Functions --------------------------------------------------------
-
 
 // -- Public Methods -----------------------------------------------------------
 
@@ -64,7 +59,9 @@ class Component {
    * @since 0.0.0
    */
   $(el) {
-    const that = this;
+    const that = this
+        , docu = Vizu.vdom ? Vizu.vdom.window.document : document
+        ;
 
     /**
      * Returns the the first element that matches the specified CSS selector(s).
@@ -79,68 +76,10 @@ class Component {
     const getElement = function() {
       if (el) {
         // Returns the the first element that matches the selector(s):
-        return Vizu.vdom
-          ? Vizu.vdom.window.document.querySelector(`#${that.id}`).querySelector(el)
-          /* istanbul ignore next */
-          : document.querySelector(`#${that.id}`).querySelector(el);
+        return docu.querySelector(`#${that.id}`).querySelector(el);
       }
       // Return the entire 'web component':
-      return Vizu.vdom
-        ? Vizu.vdom.window.document.querySelector(`#${that.id}`)
-        /* istanbul ignore next */
-        : document.querySelector(`#${that.id}`);
-    };
-
-    /**
-     * Returns the DOMTokenList collection of the class attributes of the element.
-     *
-     * @method ()
-     * @public
-     * @param {}          -,
-     * @returns {Object}  returns the DOMTokenList of the element,
-     * @since 0.0.0
-     */
-    const getClassList = function() {
-      return getElement().classList;
-    };
-
-    /**
-     * Adds a class name to the element.
-     *
-     * @method (arg1)
-     * @public
-     * @param {String}    the class name to add,
-     * @returns {}        -,
-     * @since 0.0.0
-     */
-    const addClass = function(className) {
-      getElement().classList.add(className);
-    };
-
-    /**
-     * Removes a class name to the element.
-     *
-     * @method (arg1)
-     * @public
-     * @param {String}    the class name to remove,
-     * @returns {}        -,
-     * @since 0.0.0
-     */
-    const removeClass = function(className) {
-      getElement().classList.remove(className);
-    };
-
-    /**
-     * Toggles a class name for the element.
-     *
-     * @method (arg1)
-     * @public
-     * @param {String}    the class name to add/remove,
-     * @returns {}        -,
-     * @since 0.0.0
-     */
-    const toggleClass = function(className) {
-      getElement().classList.toggle(className);
+      return docu.querySelector(`#${that.id}`);
     };
 
     /**
@@ -149,14 +88,134 @@ class Component {
      * @method (arg1)
      * @public
      * @param {String}    the html contents to add,
-     * @returns {}        -,
+     * @returns {String}  returns the node DOMString or this,
      * @since 0.0.0
      */
-    const html = function(htmlstring) {
-      if (htmlstring) {
-        getElement().innerHTML = htmlstring;
+    const html = function(xmlString) {
+      if (xmlString) {
+        getElement().innerHTML = xmlString;
+        return this;
       }
       return getElement().innerHTML;
+    };
+
+    /**
+     * Removes all the childs of the current node.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns this,
+     * @since 0.0.4
+     */
+    const empty = function() {
+      const node = getElement();
+      while (node.firstChild) {
+        node.removeChild(node.firstChild);
+      }
+      return this;
+    };
+
+    /**
+     * Appends an HTML string after the last child of the current node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.4
+     */
+    const append = function(xmlString) {
+      if (typeof xmlString === 'string') {
+        getElement().insertAdjacentHTML('beforeend', xmlString);
+      }
+      return this;
+    };
+
+    /**
+     * Appends an HTML string before the first child of the current node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.6
+     */
+    const prepend = function(xmlString) {
+      if (typeof xmlString === 'string') {
+        getElement().insertAdjacentHTML('afterbegin', xmlString);
+      }
+      return this;
+    };
+
+    /**
+     * Appends an HTML string after the current node.
+     *
+     * Nota: this method adds a node after the current node only if it is
+     * a child node of this component. 'after' is forbidden on the root node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.6
+     */
+    const after = function(xmlString) {
+      const elem = getElement();
+      if (typeof xmlString === 'string' && elem.id !== that.id) {
+        elem.insertAdjacentHTML('afterend', xmlString);
+      }
+      return this;
+    };
+
+    /**
+     * Appends an HTML string before the current node.
+     *
+     * Nota: this method adds a node before the current node only if it is
+     * a child node of this component. 'before' is forbidden on the root node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.6
+     */
+    const before = function(xmlString) {
+      const elem = getElement();
+      if (typeof xmlString === 'string' && elem.id !== that.id) {
+        getElement().insertAdjacentHTML('beforebegin', xmlString);
+      }
+      return this;
+    };
+
+    /**
+     * Replaces the current node with the given DOMString.
+     *
+     * Nota: this method replaces the current node only if it is
+     * a child node of this component. 'replaceWith' is forbidden on the root node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.6
+     */
+    const replaceWith = function(xmlString) {
+      const oldChild = getElement()
+          , parent   = oldChild.parentNode
+          // , index    =  Array.prototype.indexOf.call(parent.children, oldChild)
+          , wrapper  = docu.createElement('div')
+          ;
+      let newChild
+        ;
+
+      if (typeof xmlString === 'string' && oldChild.id !== that.id) {
+        // Replace the old child by new one:
+        wrapper.innerHTML = xmlString;
+        newChild = wrapper.firstChild;
+        parent.replaceChild(newChild, oldChild);
+      }
+      return this;
     };
 
     /**
@@ -165,12 +224,13 @@ class Component {
      * @method (arg1)
      * @public
      * @param {String}    the text contents to add,
-     * @returns {}        -,
+     * @returns {String}  returns the text contents or this;,
      * @since 0.0.0
      */
     const text = function(texte) {
       if (texte) {
         getElement().textContent = texte;
+        return this;
       }
       return getElement().textContent;
     };
@@ -182,7 +242,7 @@ class Component {
      * @public
      * @param {String}    the style attribute,
      * @param {String}    the style attribute value,
-     * @returns {String}  undefined or the style attribute value,
+     * @returns {String}  returns the style attribute value or this,
      * @since 0.0.3
      */
     const css = function(styleAttr, value) {
@@ -205,36 +265,96 @@ class Component {
 
       // Set attribute:
       getElement().style[attr] = value;
-      return undefined;
+      return this;
     };
 
     /**
-     * Removes all the childs of the current node.
+     * Returns the DOMTokenList collection of the class attributes of the element.
      *
      * @method ()
      * @public
      * @param {}          -,
-     * @returns {}        -,
-     * @since 0.0.4
+     * @returns {Object}  returns the DOMTokenList of the element,
+     * @since 0.0.0
      */
-    const empty = function() {
-      const node = getElement();
-      while (node.firstChild) {
-        node.removeChild(node.firstChild);
-      }
+    const getClassList = function() {
+      return getElement().classList;
     };
 
     /**
-     * Appends an HTML string after the last child of the current node.
+     * Adds a class name to the element.
      *
      * @method (arg1)
      * @public
-     * @param {String}    an HTML string,
-     * @returns {}        -,
-     * @since 0.0.4
+     * @param {String}    the class name to add,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
      */
-    const append = function(htmlstring) {
-      getElement().insertAdjacentHTML('beforeend', htmlstring);
+    const addClass = function(className) {
+      getElement().classList.add(className);
+      return this;
+    };
+
+    /**
+     * Removes a class name from the element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the class name to remove,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    const removeClass = function(className) {
+      getElement().classList.remove(className);
+      return this;
+    };
+
+    /**
+     * Toggles a class name for the element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the class name to add/remove,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    const toggleClass = function(className) {
+      getElement().classList.toggle(className);
+      return this;
+    };
+
+    /**
+     * Sets or Gets the specified attribute.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {String}    the attribute name,
+     * @param {String}    the attribute value,
+     * @returns {String}  returns the attribute value or this,
+     * @since 0.0.6
+     */
+    const attr = function(attribute, value) {
+      if (value) {
+        getElement().setAttribute(attribute, value);
+        return this;
+      }
+      return getElement().getAttribute(attribute);
+    };
+
+    /**
+     * Removes the specified attribute.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the attribute name,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    const removeAttr = function(attribute) {
+      if (attribute) {
+        getElement().removeAttribute(attribute);
+      }
+      return this;
     };
 
     /**
@@ -244,11 +364,12 @@ class Component {
      * @public
      * @param {String}    the DOM event string,
      * @param {Function}  the listner function,
-     * @returns {}        -,
+     * @returns {Object}  returns this,
      * @since 0.0.5
      */
     const on = function(event, listener) {
       getElement().addEventListener(event, listener);
+      return this;
     };
 
     /**
@@ -258,25 +379,32 @@ class Component {
      * @public
      * @param {String}    the DOM event string,
      * @param {Function}  the listner function,
-     * @returns {}        -,
+     * @returns {Object}  returns this,
      * @since 0.0.5
      */
     const off = function(event, listener) {
       getElement().removeEventListener(event, listener);
+      return this;
     };
 
     return {
       id: getElement() ? getElement().id : null,
       getElement,
+      html,
+      empty,
+      append,
+      prepend,
+      after,
+      before,
+      replaceWith,
+      text,
+      css,
       getClassList,
       addClass,
       removeClass,
       toggleClass,
-      html,
-      text,
-      css,
-      empty,
-      append,
+      attr,
+      removeAttr,
       on,
       off,
     };

@@ -11,8 +11,6 @@ import Component from './component';
 
 // -- Global constants (in the scope of this module)
 
-// -- Global variables (in the scope of this module)
-
 
 // -- Private Functions --------------------------------------------------------
 
@@ -156,6 +154,7 @@ const _subClass = function(SuperClass, m) {
   return SubClass;
 };
 
+
 // -- Public Methods -----------------------------------------------------------
 
 /**
@@ -226,7 +225,8 @@ const Vizu = {
       el.innerHTML = t;
     } else {
       el = Vizu.vdom ? Vizu.vdom.window.document.body : document.body;
-      el.innerHTML = +t;
+      // Attach the component to the body as the first child:
+      el.innerHTML = t + el.innerHTML;
     }
 
     // Attach event(s)

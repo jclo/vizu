@@ -1,5 +1,12 @@
 ### HEAD
 
+### 0.0.6 (July 26, 2017)
+
+  * Added the methods $().prepend(), $().after(), $().before() and $().replaceWith(),
+  * Updated the README.md file,
+  * ...,
+
+
 ### 0.0.5 (July 24, 2017)
 
   * Added the method events() to Component,

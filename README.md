@@ -46,7 +46,7 @@ class Aaa extends Component {
 }
 ```
 
-A `Vizu Web Component` is defined by a class with, at least, a method `render` that returns a plain old HTML block. You can insert Javascript instructions in it. They are processed when the component is rendered.
+A `Vizu Web Component` is defined by a class with, at least, the method `render` that returns a plain old HTML block. You can insert Javascript instructions in it. They are processed when the component is rendered.
 
 
 ### Create a View
@@ -67,7 +67,7 @@ The method `Vizu.render()` renders the `Vizu Web Components` directly in the DOM
 
   * The second argument is a Javascript object. It contains the `Vizu Web Component` tags and their reference (reference to the class). If omitted, the `Vizu Web Component` tags aren't processed.
 
-  * And finally, the third argument is the DOM element in which the view is inserted as a child element. If omitted, the view is directly inserted into the `body`.
+  * And finally, the third argument is the DOM element in which the view is inserted as a child element. If omitted, the view is directly inserted into the `body` as the first node.
 
 
 ## Table of Contents
@@ -300,13 +300,13 @@ import { Component } from 'vizu';
 class Aaa extends Component {
 
   getInitialState() {
-    this.title = 'Title';
+    this.props.options.title = 'Title';
   }
 
   render() {
     return `
       <div>
-        <h1>${this.title}</h1>
+        <h1>${this.props.options.title}</h1>
       </div>
     `;
   }
@@ -326,19 +326,19 @@ import { Component } from 'vizu';
 class Aaa extends Component {
 
   getInitialState() {
-    this.title = 'Title';
+    this.props.options.title = 'Title';
   }
 
   // Method particular to this Vizu Web Component
   updateTitle(title) {
-    this.title = title;
+    this.props.options.title = title;
     this.$('h1').getElement().innerText = title;
   }
 
   render() {
     return `
       <div>
-        <h1>${this.title}</h1>
+        <h1>${this.props.options.title}</h1>
       </div>
     `;
   }
@@ -364,13 +364,13 @@ If the method `$().getElement()` has no selector (argument), it returns the enti
 Vizu.createClass({
 
   getInitialState: function() {
-    this.title = 'Title';
+    this.props.options.title = 'Title';
   },
 
   render: function() {
     return `
       <div>
-        <h1>${this.title}</h1>
+        <h1>${this.props.options.title}</h1>
       </div>
     `;
   }
@@ -542,25 +542,39 @@ A `Vizu Web Component` is a class object that extends the class `Component` of `
 Method                          | Description
 ```
 ```
-$().getElement()                | returns the selected child element of the Vizu Web Component.*/
-                                | $().getElement() returns the whole DOM element of the selected Vizu Web Component while $(el).getElement() returns the el child element.
-$().id                          | returns the id of the selected Vizu Web Component while $(el).id returns the id of the el child element (if any).
-$(el).getClassList()            | returns a DOMTokenList. getClassList() is a wrapper around classList.
-$(el).addClass('className')     | adds this class to the el child element.
-$(el).removeClass('className')  | removes this class to the el child element.
-$(el).toggleClass('className')  | adds or removes this class to the el child element.
-$().html()                      | returns the child element of the selected Vizu Web Component.
-$(el).html()                    | returns the child element of the el element.
-$().html('<h1>Title</h1>')      | replaces the child element of the Vizu Web Component by <h1>Title</h1>.
-$(el).html('<h1>Title</h1>')    | adds the child element <h1>Title</h1> to the el child element.
-$(el).text()                    | returns the contents of the el child element.
-$(el).text('aaa')               | replaces the contents of the el child element by aaa.
-$(el).empty()                   | removes all the child nodes.
-$(el).append(hml)               | adds the HTML string after the last child node.
-$(el).on(event, listener)       | adds an event listener to the selected child.
-$(el).off(event, listener)      | removes the attached event listener from the selected child.
-```
+$().getElement()                | returns the child element of the Vizu Web Component,
+$(el).getElement()              | returns the child element of the el child element,
 
+$().id                          | returns the id of selected element,
+
+$().html()                      | returns the child element(s) of the selected element.
+$().html(xml)                   | replaces the child element by a new element defined by the passed-in XML string and returns this,
+$().empty()                     | removes all the child nodes and returns this,
+$().append(xml)                 | inserts the element (defined by the passed-in XML string) after the last child node and returns this,
+$().prepend(xml)                | inserts the element before the first child node and returns this,
+$(el).after(xml)¹               | inserts the element after the selected element and returns this,
+$(el).before(xml)¹              | inserts the element before the selected element and returns this,
+$(el)replaceWith(xml)¹          | replaces the selected element by the passed-in element and returns this,
+
+$().text()                      | returns the contents of the selected element,
+$().text('string')              | replaces the text contents and returns this,
+
+$().css(style)                  | returns the style value,
+$().css(style, value)           | sets the style value and returns this,
+
+$().getClassList()              | returns a DOMTokenList (getClassList() is a wrapper around classList),
+$().addClass('className')       | adds 'className' to the selected element and returns this,
+$().removeClass('className')    | removes 'className' from the selected element and returns this,
+$().toggleClass('className')    | adds or removes 'className' to/from the selected element and returns this,
+
+$().attr(attribute)             | returns the attribute value of the selected element,
+$().attr(attribute, value)      | sets the attribute of the selected element,
+$().removeAttr(attribute)       | removes the attribute from the selected element,
+
+$(el).on(event, listener)       | adds an event listener to the selected child and returns this.
+$(el).off(event, listener)      | removes the attached event listener from the selected child and returns this.
+```
+¹ *after, before and replace could only apply to a child element and not to the Component itself*,
 
 ### Vizu Render
 
@@ -583,7 +597,7 @@ const view = Vizu.render(view, reference, el);
   ```
   If this argument is omitted, the `Vizu Web Component` tag is not interpreted.
 
-  * `el`: the third argument is the element in the DOM tree where the view is inserted. If it is omitted, the view is directly inserted in the `body`.
+  * `el`: the third argument is the element in the DOM tree where the view is inserted. If it is omitted, the view is directly inserted in the `body` as the first node.
 
 `Vizu.render()` returns the view object. This object allows the user to interact with the `Vizu Web Components` defining the `view`. The view object looks like:
 ```js
