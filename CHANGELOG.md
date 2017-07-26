@@ -4,7 +4,7 @@
 
   * Added the methods $().prepend(), $().after(), $().before() and $().replaceWith(),
   * Updated the README.md file,
-  * ...,
+  * Release.
 
 
 ### 0.0.5 (July 24, 2017)
