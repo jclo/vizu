@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.x (July 27, 2017)
+
+  * Fixed a few typos in the README,
+  * ...,
+
+
 ### 0.0.6 (July 26, 2017)
 
   * Added the methods $().prepend(), $().after(), $().before() and $().replaceWith(),
