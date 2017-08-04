@@ -1,10 +1,10 @@
 ### HEAD
 
-### 0.0.x (July 27, 2017)
+### 0.0.7 (August 4, 2017)
 
   * Fixed a few typos in the README,
   * added the method $().animate(),
-  * ...,
+  * Release.
 
 
 ### 0.0.6 (July 26, 2017)
