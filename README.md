@@ -572,6 +572,8 @@ $().attr(attribute)             | returns the attribute value of the selected el
 $().attr(attribute, value)      | sets the attribute of the selected element,
 $().removeAttr(attribute)       | removes the attribute from the selected element,
 
+$().animate(props, d, e, cb)    | Changes dynamically the CSS attributes,
+
 $(el).on(event, listener)       | adds an event listener to the selected child and returns this.
 $(el).off(event, listener)      | removes the attached event listener from the selected child and returns this.
 ```

@@ -265,6 +265,7 @@ class Bbb extends Component {
   }
 
   render() {
+    // Reference Aaa:
     this.cList = { '<Aaa />': Aaa };
     return `
       <div>
@@ -370,7 +371,7 @@ Vizu.createClass({
   render: function() {
     return `
       <div>
-        <h1>${this.props.options.title}</h1>
+        <h1>` + this.props.options.title + `</h1>
       </div>
     `;
   }
@@ -539,7 +540,7 @@ A `Vizu Web Component` is a class object that extends the class `Component` of `
 #### $()
 
 ```
-Method                          | Description
+Methods                         | Description
 ```
 ```
 $().getElement()                | returns the child element of the Vizu Web Component,
@@ -571,10 +572,12 @@ $().attr(attribute)             | returns the attribute value of the selected el
 $().attr(attribute, value)      | sets the attribute of the selected element,
 $().removeAttr(attribute)       | removes the attribute from the selected element,
 
+$().animate(props, d, e, cb)    | Changes dynamically the CSS attributes,
+
 $(el).on(event, listener)       | adds an event listener to the selected child and returns this.
 $(el).off(event, listener)      | removes the attached event listener from the selected child and returns this.
 ```
-¹ *after, before and replace could only apply to a child element and not to the Component itself*,
+¹ *after, before and replacewith could only apply to a child element and not to the Component itself*,
 
 ### Vizu Render
 

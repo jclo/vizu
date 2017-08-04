@@ -10,8 +10,9 @@ import testVizuRender from './testvizurender';
 import testVizuRenderext from './testvizurenderext';
 import testVizuRenderext2 from './testvizurenderext2';
 import testVizuReplace from './testvizureplace';
-import testVizuComponent from './testvizucomponent';
 import testVizuCreateClass from './testvizucreateclass';
+import testVizuComponent from './testvizucomponent';
+import testVizuComponent2 from './testvizucomponent2';
 
 // -- Local constants
 // Create a Virtual DOM:
@@ -55,6 +56,10 @@ const HTML = `
       <div id="app5B"></div>
       <div id="app5C"></div>
       <div id="app5D"></div>
+
+      <div> id="app60"></div>
+      <div> id="app61"></div>
+      <div> id="app62"></div>
     </body>
   </html>
 `;
@@ -74,4 +79,5 @@ describe('Vizu', () => {
   testVizuReplace(dom);
   testVizuCreateClass(dom);
   testVizuComponent(dom);
+  testVizuComponent2(dom);
 });

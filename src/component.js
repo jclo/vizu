@@ -5,6 +5,8 @@
 
 // -- Local modules
 import Vizu from './vizu';
+import Anim from './private/animate';
+import _ from './private/overslash';
 
 // -- Global constants (in the scope of this module)
 
@@ -358,6 +360,67 @@ class Component {
     };
 
     /**
+     * Performs a custom animation of a set of CSS properties.
+     *
+     * @method (properties [, duration ] [, easing ] [, complete ])
+     * @public
+     * @param {Object}    An object of CSS properties,
+     * @param {Number}    define how long the animation run,
+     * @param {Easing}    the easing animation method,
+     * @param {Function}  the function to call at completion,
+     * @returns {Object}  returns this,
+     * @since 0.0.7
+     */
+    const animate = function(properties, ...args) {
+      const DTIME = 400
+          , FAST  = 200
+          , SLOW  = 600
+          , INC   = 10
+          , elem  = getElement()
+          , delay = INC
+          ;
+
+      // Is the argument properties an object?
+      if (!_.isLiteralObject(properties)) {
+        return this;
+      }
+
+      // Extract the optional arguments:
+      const argus = Anim.extractArgs(args);
+
+      // Set the duration:
+      const duration = _.isNumber(argus.duration)
+        ? argus.duration
+        : (function(arg) {
+          if (arg === 'fast') return FAST;
+          if (arg === 'slow') return SLOW;
+          return DTIME;
+        }(argus.duration));
+
+      // Set the easing (swing only for the time being):
+      const easing = (Anim.easing && Anim.easing[argus.easing])
+        ? Anim.easing[argus.easing]
+        : Anim.swing;
+
+      // Set the callback:
+      const callback = argus.callback ? argus.callback : null;
+
+      // Run the animation:
+      Anim.run(elem, properties, easing, duration, delay, callback);
+
+      // Test Mode:
+      if (Vizu.vdom) {
+        this.probe = {
+          duration,
+          easing: (Anim.easing && Anim.easing[argus.easing]) ? argus.easing : 'swing',
+          callback,
+        };
+      }
+
+      return this;
+    };
+
+    /**
      * Attachs an event listener to the current node.
      *
      * @method (arg1, arg2)
@@ -405,6 +468,7 @@ class Component {
       toggleClass,
       attr,
       removeAttr,
+      animate,
       on,
       off,
     };

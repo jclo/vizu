@@ -3,6 +3,7 @@
 ### 0.0.x (July 27, 2017)
 
   * Fixed a few typos in the README,
+  * added the method $().animate(),
   * ...,
 
 
