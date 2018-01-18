@@ -260,7 +260,7 @@ export default function(dom) {
 
       it('Expects view2.Aaa.$(".rect").animate({ top: "100px" }) to set top to 100px.', (done) => {
         const o20 = view2.Aaa.$('.rect').animate({ top: '100px', 'font-size': '12px' }, () => {
-          expect(o20.getElement().style.top).to.be.a('string').that.is.equal('100px');
+          expect(o20[0].style.top).to.be.a('string').that.is.equal('100px');
           done();
         });
       });

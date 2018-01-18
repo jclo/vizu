@@ -60,28 +60,83 @@ class Component {
    *                    CSS selector(s),
    * @since 0.0.0
    */
-  $(el) {
-    const that = this
+  $(selector) {
+    const cid = this.id
         , docu = Vizu.vdom ? Vizu.vdom.window.document : document
         ;
 
+    let el;
+
     /**
-     * Returns the the first element that matches the specified CSS selector(s).
+     * Select a child element.
      *
      * @method (arg1)
      * @public
-     * @param {String}    the CSS selector(s),
-     * @returns {Object}  returns the first element that matches a specified
-     *                    CSS selector(s),
-     * @since 0.0.0
+     * @param {String}    the selector,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
      */
-    const getElement = function() {
-      if (el) {
-        // Returns the the first element that matches the selector(s):
-        return docu.querySelector(`#${that.id}`).querySelector(el);
+    const select = function(sel) {
+      if (typeof sel === 'string' && this[0]) {
+        const child = this[0].querySelector(sel);
+        if (child) {
+          this[0] = child;
+        }
       }
-      // Return the entire 'web component':
-      return docu.querySelector(`#${that.id}`);
+      return this;
+    };
+
+    /**
+     * Selects the specified child if it exists.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Number}    the child index,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    const selectChild = function(n) {
+      if (Object.prototype.toString.call(n) === '[object Number]') {
+        this[0] = this[0].children[n] ? this[0].children[n] : this[0];
+      }
+      return this;
+    };
+
+    /**
+     * Returns to the parent element.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    const parent = function() {
+      if (this.root) {
+        // As a root parent is defined, we stop at it.
+        if (this[0] !== this.root) {
+          this[0] = this[0].parentNode;
+        }
+      } else {
+        this[0] = this[0].parentNode;
+      }
+      return this;
+    };
+
+    /**
+     * Returns to the root parent if defined.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns this,
+     * @since 0.0.7
+     */
+    const firstParent = function() {
+      if (this.root) {
+        this[0] = this.root;
+      }
+      return this;
     };
 
     /**
@@ -95,10 +150,10 @@ class Component {
      */
     const html = function(xmlString) {
       if (xmlString) {
-        getElement().innerHTML = xmlString;
+        this[0].innerHTML = xmlString;
         return this;
       }
-      return getElement().innerHTML;
+      return this[0].innerHTML;
     };
 
     /**
@@ -111,9 +166,8 @@ class Component {
      * @since 0.0.4
      */
     const empty = function() {
-      const node = getElement();
-      while (node.firstChild) {
-        node.removeChild(node.firstChild);
+      while (this[0].firstChild) {
+        this[0].removeChild(this[0].firstChild);
       }
       return this;
     };
@@ -129,7 +183,7 @@ class Component {
      */
     const append = function(xmlString) {
       if (typeof xmlString === 'string') {
-        getElement().insertAdjacentHTML('beforeend', xmlString);
+        this[0].insertAdjacentHTML('beforeend', xmlString);
       }
       return this;
     };
@@ -145,7 +199,7 @@ class Component {
      */
     const prepend = function(xmlString) {
       if (typeof xmlString === 'string') {
-        getElement().insertAdjacentHTML('afterbegin', xmlString);
+        this[0].insertAdjacentHTML('afterbegin', xmlString);
       }
       return this;
     };
@@ -163,9 +217,8 @@ class Component {
      * @since 0.0.6
      */
     const after = function(xmlString) {
-      const elem = getElement();
-      if (typeof xmlString === 'string' && elem.id !== that.id) {
-        elem.insertAdjacentHTML('afterend', xmlString);
+      if (typeof xmlString === 'string' && this[0].id !== cid) {
+        this[0].insertAdjacentHTML('afterend', xmlString);
       }
       return this;
     };
@@ -183,9 +236,8 @@ class Component {
      * @since 0.0.6
      */
     const before = function(xmlString) {
-      const elem = getElement();
-      if (typeof xmlString === 'string' && elem.id !== that.id) {
-        getElement().insertAdjacentHTML('beforebegin', xmlString);
+      if (typeof xmlString === 'string' && this[0].id !== cid) {
+        this[0].insertAdjacentHTML('beforebegin', xmlString);
       }
       return this;
     };
@@ -203,19 +255,19 @@ class Component {
      * @since 0.0.6
      */
     const replaceWith = function(xmlString) {
-      const oldChild = getElement()
-          , parent   = oldChild.parentNode
+      const oldChild = this[0]
+          , parento   = oldChild.parentNode
           // , index    =  Array.prototype.indexOf.call(parent.children, oldChild)
           , wrapper  = docu.createElement('div')
           ;
       let newChild
         ;
 
-      if (typeof xmlString === 'string' && oldChild.id !== that.id) {
+      if (typeof xmlString === 'string' && oldChild.id !== cid) {
         // Replace the old child by new one:
         wrapper.innerHTML = xmlString;
         newChild = wrapper.firstChild;
-        parent.replaceChild(newChild, oldChild);
+        parento.replaceChild(newChild, oldChild);
       }
       return this;
     };
@@ -231,10 +283,122 @@ class Component {
      */
     const text = function(texte) {
       if (texte) {
-        getElement().textContent = texte;
+        this[0].textContent = texte;
         return this;
       }
-      return getElement().textContent;
+      return this[0].textContent;
+    };
+
+    /**
+     * Clones the selected element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Boolean}   true clone with children, false without,
+     * @returns {Object}  returns the cloned element,
+     * @since 0.0.8
+     */
+    const clone = function(deep) {
+      if (deep === true || deep === false) {
+        return this[0].cloneNode(deep);
+      }
+      return this[0].cloneNode(true);
+    };
+
+    /**
+     * Inserts a child element before another child element.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {Object}    the new node element,
+     * @param {Object}    the target node element,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    const insertChildBefore = function(newChild, child) {
+      if (newChild) {
+        this[0].insertBefore(newChild, child);
+      }
+      return this;
+    };
+
+    /**
+     * Removed the passed-in child element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}    the child element to remove,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    const removeChild = function(child) {
+      if (child) {
+        this[0].removeChild(child);
+      }
+      return this;
+    };
+
+    /**
+     * Replaces a child by another.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {Object}    the new node element,
+     * @param {Object}    the node element to replace,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    const replaceChild = function(newChild, child) {
+      if (newChild) {
+        this[0].replaceChild(newChild, child);
+      }
+      return this;
+    };
+
+    /**
+     * Returns the children.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the children HTMLCollection,
+     * @since 0.0.8
+     */
+    const children = function() {
+      return this[0].children;
+    };
+
+    /**
+     * Returns the children position in the parent tree.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the children position,
+     * @since 0.0.8
+     */
+    const childIndex = function() {
+      let child = this[0]
+        , index = 0
+        ;
+      while (child !== null) {
+        child = child.previousElementSibling;
+        index += 1;
+      }
+      return index - 1;
+    };
+
+    /**
+     * Returns the DOMRect object that bounds the contents of the range.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the DOMRect object,
+     * @since 0.0.8
+     */
+    const getRect = function() {
+      return this[0] ? this[0].getBoundingClientRect() : null;
     };
 
     /**
@@ -262,11 +426,11 @@ class Component {
 
       if (!value) {
         // Get attribute:
-        return getElement().style[attr];
+        return this[0].style[attr];
       }
 
       // Set attribute:
-      getElement().style[attr] = value;
+      this[0].style[attr] = value;
       return this;
     };
 
@@ -280,7 +444,7 @@ class Component {
      * @since 0.0.0
      */
     const getClassList = function() {
-      return getElement().classList;
+      return this[0].classList;
     };
 
     /**
@@ -293,7 +457,25 @@ class Component {
      * @since 0.0.0
      */
     const addClass = function(className) {
-      getElement().classList.add(className);
+      this[0].classList.add(className);
+      return this;
+    };
+
+    /**
+     * Adds a list of classes to the element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Array}     the list of classes to add,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    const addClasses = function(classes) {
+      if (Array.isArray(classes)) {
+        for (let i = 0; i < classes.length; i++) {
+          this[0].classList.add(classes[i]);
+        }
+      }
       return this;
     };
 
@@ -307,7 +489,25 @@ class Component {
      * @since 0.0.0
      */
     const removeClass = function(className) {
-      getElement().classList.remove(className);
+      this[0].classList.remove(className);
+      return this;
+    };
+
+    /**
+     * Removes a list of classes from the element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Array}     the list of classes to remove,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    const removeClasses = function(classes) {
+      if (Array.isArray(classes)) {
+        for (let i = 0; i < classes.length; i++) {
+          this[0].classList.remove(classes[i]);
+        }
+      }
       return this;
     };
 
@@ -321,8 +521,26 @@ class Component {
      * @since 0.0.0
      */
     const toggleClass = function(className) {
-      getElement().classList.toggle(className);
+      this[0].classList.toggle(className);
       return this;
+    };
+
+    /**
+     * Checks if the element has the passed-in class.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the class name,
+     * @returns {Boolean} returns true or false,
+     * @since 0.0.8
+     */
+    const hasClass = function(className) {
+      const list = this[0].classList.value.split(' ');
+
+      if (Object.prototype.toString.call(className) === '[object String]' && list.indexOf(className) !== -1) {
+        return true;
+      }
+      return false;
     };
 
     /**
@@ -337,10 +555,10 @@ class Component {
      */
     const attr = function(attribute, value) {
       if (value) {
-        getElement().setAttribute(attribute, value);
+        this[0].setAttribute(attribute, value);
         return this;
       }
-      return getElement().getAttribute(attribute);
+      return this[0].getAttribute(attribute);
     };
 
     /**
@@ -354,7 +572,7 @@ class Component {
      */
     const removeAttr = function(attribute) {
       if (attribute) {
-        getElement().removeAttribute(attribute);
+        this[0].removeAttribute(attribute);
       }
       return this;
     };
@@ -376,7 +594,7 @@ class Component {
           , FAST  = 200
           , SLOW  = 600
           , INC   = 10
-          , elem  = getElement()
+          , elem  = this[0]
           , delay = INC
           ;
 
@@ -431,7 +649,7 @@ class Component {
      * @since 0.0.5
      */
     const on = function(event, listener) {
-      getElement().addEventListener(event, listener);
+      this[0].addEventListener(event, listener);
       return this;
     };
 
@@ -446,13 +664,26 @@ class Component {
      * @since 0.0.5
      */
     const off = function(event, listener) {
-      getElement().removeEventListener(event, listener);
+      this[0].removeEventListener(event, listener);
       return this;
     };
 
+    // -- Main
+    if (selector) {
+      // Selects the first element that matches the selector(s):
+      el = docu.querySelector(`#${cid}`).querySelector(selector);
+    } else {
+      // Selects the entire 'web component':
+      el = docu.querySelector(`#${cid}`);
+    }
+
     return {
-      id: getElement() ? getElement().id : null,
-      getElement,
+      0: el,
+      id: el ? el.id : null,
+      select,
+      selectChild,
+      parent,
+      firstParent,
       html,
       empty,
       append,
@@ -461,11 +692,21 @@ class Component {
       before,
       replaceWith,
       text,
+      clone,
+      insertChildBefore,
+      removeChild,
+      replaceChild,
+      children,
+      childIndex,
+      getRect,
       css,
       getClassList,
       addClass,
+      addClasses,
       removeClass,
+      removeClasses,
       toggleClass,
+      hasClass,
       attr,
       removeAttr,
       animate,

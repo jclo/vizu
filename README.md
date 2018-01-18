@@ -12,7 +12,7 @@
 
 ## A Javascript View library for building web and hybrid mobile applications
 
-`Vizu` allows the user to create and aggregate `Vizu Web Components` and then render and manipulate them. It offers a similar API as `React` but `Vizu` directly writes to the DOM and it is much more lighter.
+`Vizu` allows the user to create and aggregate `Vizu Web Components` and then render and manipulate them. It offers a similar API as `React` but `Vizu` directly writes to the DOM and it is much more lighter. As `Vizu` provides a set of methods to manipulate the component's childs in the DOM tree (incremental DOM), it doesn't need a virtual DOM.
 
 `Vizu` introduces only two concepts: `Vizu Web Components` and `view`. A `Vizu Web Component` is a Javascript object that defines an HTML block and methods to manipulate it. A `view` is the aggregation of `Vizu Web Components`.
 
@@ -333,7 +333,7 @@ class Aaa extends Component {
   // Method particular to this Vizu Web Component
   updateTitle(title) {
     this.props.options.title = title;
-    this.$('h1').getElement().innerText = title;
+    this.$('h1')[0].innerText = title;
   }
 
   render() {
@@ -348,13 +348,13 @@ class Aaa extends Component {
 
 This `Vizu Web Component <Aaa />` has a specific method called `updateTitle`. It updates the title of the component (we will see later on how to access this method).
 
-This method relies on `this.$('h1').getElement().innerText` to change the title. The method `$(el)` is just a wrapper around the Javascript function `querySelector`.
+This method relies on `this.$('h1')[0].innerText` to change the title. The method `$(el)` is just a wrapper around the Javascript function `querySelector`.
 
-If the method `$().getElement()` has no selector (argument), it returns the entire HTML block that defines this `Vizu Web Component` in the DOM tree.
+If the method `$()[]` has no selector (argument), it returns the entire HTML block that defines this `Vizu Web Component` in the DOM tree.
 
 ***Nota***:
 
-`Component` implements a few shortcuts (see the reference section). For instance `$('h1').getElement().innerText` can be replaced by `$('h1').text()`.
+`Component` implements a few shortcuts (see the reference section). For instance `$('h1')[0].innerText` can be replaced by `$('h1').text()`.
 
 
 ### Create Vizu Web Component without ES6 classes
@@ -543,10 +543,14 @@ A `Vizu Web Component` is a class object that extends the class `Component` of `
 Methods                         | Description
 ```
 ```
-$().getElement()                | returns the child element of the Vizu Web Component,
-$(el).getElement()              | returns the child element of the el child element,
-
+$()                             | selects the Vizu Web Component and returns this,
+$(sel)                          | selects the child element with the attribute 'sel' and returns this,
 $().id                          | returns the id of selected element,
+$()[0]                          | returns the selected DOM element,
+
+$().selectChild(n)              | selects the nth child,
+$().parent()                    | selects the parent node,
+$().firstParent()               | selects the root parent node if defined,
 
 $().html()                      | returns the child element(s) of the selected element.
 $().html(xml)                   | replaces the child element by a new element defined by the passed-in XML string and returns this,
@@ -560,19 +564,30 @@ $(el)replaceWith(xml)¹          | replaces the selected element by the passed-i
 $().text()                      | returns the contents of the selected element,
 $().text('string')              | replaces the text contents and returns this,
 
+$().clone(deep)                 | clones the selected node if deep is false, clones node and childs if deep is true,
+$().insertChildBefore(n, c)     | inserts the child 'n' before the child 'c'  and returns this,
+$().removeChild(child)          | removes the child 'child'  and returns this,
+$().replaceChild(n, c)          | replaces the child 'c' by the child 'n'  and returns this,
+$().children()                  | returns a DOM object with all the node children,
+$().childIndex()                | returns the child index (0 for the first child),
+$().getRect()                   | returns the position and size of the node,
+
 $().css(style)                  | returns the style value,
 $().css(style, value)           | sets the style value and returns this,
 
 $().getClassList()              | returns a DOMTokenList (getClassList() is a wrapper around classList),
 $().addClass('className')       | adds 'className' to the selected element and returns this,
+$().addClasses([...])           | adds an array of classes and returns this,
 $().removeClass('className')    | removes 'className' from the selected element and returns this,
+$().removeClasses([...])        | removes an array of classes and returns this,
 $().toggleClass('className')    | adds or removes 'className' to/from the selected element and returns this,
+$().hasClass('class')           | returns true if the node has the class 'class' or false if not,
 
 $().attr(attribute)             | returns the attribute value of the selected element,
 $().attr(attribute, value)      | sets the attribute of the selected element,
 $().removeAttr(attribute)       | removes the attribute from the selected element,
 
-$().animate(props, d, e, cb)    | Changes dynamically the CSS attributes,
+$().animate(props, d, e, cb)    | changes dynamically the CSS attributes,
 
 $(el).on(event, listener)       | adds an event listener to the selected child and returns this.
 $(el).off(event, listener)      | removes the attached event listener from the selected child and returns this.

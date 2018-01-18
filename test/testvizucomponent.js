@@ -90,6 +90,78 @@ export default function(dom) {
       });
     });
 
+    describe('Test the method Component.$().select():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app50A'),
+      );
+      it('Expects the method view.Ccc.$().select()[0].id to return Ccc.$().id', () => {
+        expect(view.Ccc.$().select()[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+      it('Expects the method view.Ccc.$().select("123")[0].id to return Ccc.$().id', () => {
+        expect(view.Ccc.$().select('aaa')[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+      it('Expects the method view.Ccc.$().select(".title")[0].innerHTML to return "Hi!"', () => {
+        expect(view.Ccc.$().select('.title')[0].innerHTML).to.be.a('string').that.is.equal('Hi!');
+      });
+    });
+
+    describe('Test the method Component.$().selectChild():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app50A1'),
+      );
+      it('Expects the method view.Ccc.$().selectChild() not to select any child.', () => {
+        expect(view.Ccc.$().selectChild()[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+      it('Expects the method view.Ccc.$().selectChild(0) to select the first child.', () => {
+        expect(view.Ccc.$().selectChild(0)[0].innerHTML).to.be.a('string').that.is.equal('Hi!');
+      });
+      it('Expects the method view.Ccc.$().selectChild(2) not to select any child.', () => {
+        expect(view.Ccc.$().selectChild(2)[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+    });
+
+    describe('Test the method Component.$().parent():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app50B'),
+      );
+      it('Expects the method view.Ccc.$(".title").parent().id to return the component id.', () => {
+        expect(view.Ccc.$('.title').parent()[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+      it('Expects the method view.Ccc.$(".title").parent().id to return the component id.', () => {
+        const o = view.Ccc.$();
+        o.root = view.Ccc.$()[0];
+        expect(o.select('.title').parent().parent()[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+    });
+
+    describe('Test the method Component.$().firstParent():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app50B1'),
+      );
+
+      it('Expects the method view.Ccc.$().firstParent() not to to do anything.', () => {
+        expect(view.Ccc.$().firstParent()[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+      it('Expects the method view.Ccc.$().selectChild(0).firstParent() to select root parent.', () => {
+        const o = view.Ccc.$();
+        o.root = view.Ccc.$()[0];
+        expect(o.selectChild(0).firstParent()[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+      it('Expects method view.Ccc.$().firstParent().firstParent() not to to do anything.', () => {
+        const o = view.Ccc.$();
+        o.root = view.Ccc.$()[0];
+        expect(o.firstParent().firstParent()[0].id).to.be.a('string').that.is.equal(view.Ccc.$().id);
+      });
+    });
+
     describe('Test the method Component.$().html():', () => {
       const view = Vizu.render(
         '<Ccc />',
@@ -117,7 +189,7 @@ export default function(dom) {
       });
       it('Expects view.Ccc.$().empty() to remove "h1" childnode.', () => {
         view.Ccc.$().empty();
-        expect(view.Ccc.$('h1').getElement()).to.be.null;
+        expect(view.Ccc.$('h1')[0]).to.be.null;
       });
     });
 
@@ -129,12 +201,12 @@ export default function(dom) {
       );
       it('Expects view.Ccc.$().append("<h2>Hello!</h2>") to add this node as the last child.', () => {
         view.Ccc.$().append('<h2>Hello!</h2>');
-        expect(view.Ccc.$().getElement().lastChild.textContent).to.be.equal('Hello!');
+        expect(view.Ccc.$()[0].lastChild.textContent).to.be.equal('Hello!');
       });
 
       it('Expects view.Ccc.$().append(["<h2>Hello!</h2>"]}) not to add a new child.', () => {
         view.Ccc.$().append(['<h2>Hello!</h2>']);
-        expect(view.Ccc.$().getElement().children.length).to.be.equal(2);
+        expect(view.Ccc.$()[0].children.length).to.be.equal(2);
       });
     });
 
@@ -146,12 +218,12 @@ export default function(dom) {
       );
       it('Expects view.Ccc.$().prepend("<h2>Hello!</h2>") to add this node as the first child.', () => {
         view.Ccc.$().prepend('<h2>Hello!</h2>');
-        expect(view.Ccc.$().getElement().firstChild.textContent).to.be.equal('Hello!');
+        expect(view.Ccc.$()[0].firstChild.textContent).to.be.equal('Hello!');
       });
 
       it('Expects view.Ccc.$().prepend(["<h2>Hello!</h2>"]}) not to add a new child.', () => {
         view.Ccc.$().prepend(['<h2>Hello!</h2>']);
-        expect(view.Ccc.$().getElement().children.length).to.be.equal(2);
+        expect(view.Ccc.$()[0].children.length).to.be.equal(2);
       });
     });
 
@@ -163,11 +235,11 @@ export default function(dom) {
       );
       it('Expects view.Ddd.$(".aaa").after("<h2>Hello!</h2>") to add this node after this one.', () => {
         view.Ddd.$('.aaa').after('<h2>Hello!</h2>');
-        expect(view.Ddd.$('.aaa').getElement().nextElementSibling.textContent).to.be.equal('Hello!');
+        expect(view.Ddd.$('.aaa')[0].nextElementSibling.textContent).to.be.equal('Hello!');
       });
       it('Expects view.Ddd.$(".aaa").after(["<h2>Hello!</h2>"]}) not to add a new child.', () => {
         view.Ddd.$('.aaa').after(['<h2>Hello!</h2>']);
-        expect(view.Ddd.$().getElement().children.length).to.be.equal(2);
+        expect(view.Ddd.$()[0].children.length).to.be.equal(2);
       });
     });
 
@@ -179,11 +251,11 @@ export default function(dom) {
       );
       it('Expects view.Ddd.$(".aaa").before("<h2>Hello!</h2>") to add this node before this one.', () => {
         view.Ddd.$('.aaa').before('<h2>Hello!</h2>');
-        expect(view.Ddd.$('.aaa').getElement().previousElementSibling.textContent).to.be.equal('Hello!');
+        expect(view.Ddd.$('.aaa')[0].previousElementSibling.textContent).to.be.equal('Hello!');
       });
       it('Expects view.Ddd.$(".aaa").before(["<h2>Hello!</h2>"]}) not to add a new child.', () => {
         view.Ddd.$('.aaa').before(['<h2>Hello!</h2>']);
-        expect(view.Ddd.$().getElement().children.length).to.be.equal(2);
+        expect(view.Ddd.$()[0].children.length).to.be.equal(2);
       });
     });
 
@@ -195,15 +267,15 @@ export default function(dom) {
       );
       it('Expects view.Ddd.$("h1").replaceWith("<h2>Hello!</h2>") not to add a new child.', () => {
         view.Ddd.$('h1').replaceWith('<h2>Hello!</h2>');
-        expect(view.Ddd.$('h1').getElement()).to.be.null;
+        expect(view.Ddd.$('h1')[0]).to.be.null;
       });
       it('Expects this node child to be replaced by "<h2>Hello!</h2>".', () => {
-        expect(view.Ddd.$('h2').getElement().outerHTML).to.be.equal('<h2>Hello!</h2>');
+        expect(view.Ddd.$('h2')[0].outerHTML).to.be.equal('<h2>Hello!</h2>');
       });
 
       it('Expects view.Ddd.$("h2").replaceWith(["zzz"]) not to alter this child.', () => {
         view.Ddd.$('h2').replaceWith(['zzz']);
-        expect(view.Ddd.$('h2').getElement().outerHTML).to.be.equal('<h2>Hello!</h2>');
+        expect(view.Ddd.$('h2')[0].outerHTML).to.be.equal('<h2>Hello!</h2>');
       });
     });
 
@@ -220,6 +292,138 @@ export default function(dom) {
       it('Expects view.Ccc.$("h1").text("Hello"), view.Ccc.$("h1").text() to return "Hello".', () => {
         view.Ccc.$('h1').text('Hello');
         expect(view.Ccc.$('h1').text()).to.be.equal('Hello');
+      });
+    });
+
+    describe('Test the method Component.$().text():', () => {
+      const view = Vizu.render(
+        '<Ddd />',
+        { '<Ddd />': Ddd },
+        dom.window.document.getElementById('app58A'),
+      );
+
+      it('Expects view.Ddd.$().clone() to return a clone with one child.', () => {
+        expect(view.Ddd.$().clone().children.length).to.be.a('number').that.is.equal(1);
+      });
+      it('Expects view.Ddd.$().clone() to return a clone with one grandchild.', () => {
+        expect(view.Ddd.$().clone().children[0].children.length).to.be.a('number').that.is.equal(1);
+      });
+      it('Expects view.Ddd.$().clone(true) to return a clone with one child.', () => {
+        expect(view.Ddd.$().clone(true).children.length).to.be.a('number').that.is.equal(1);
+      });
+      it('Expects view.Ddd.$().clone(true) to return a clone with one grandchild.', () => {
+        expect(view.Ddd.$().clone(true).children[0].children.length).to.be.a('number').that.is.equal(1);
+      });
+      it('Expects view.Ddd.$().clone(false) to return a clone with no child.', () => {
+        expect(view.Ddd.$().clone(false).children.length).to.be.a('number').that.is.equal(0);
+      });
+    });
+
+    describe('Test the method Component.$().insertChildBefore():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app58B'),
+      );
+      it('Expects view.Ccc.$().insertChildBefore() not to change the first child.', () => {
+        expect(view.Ccc.$().insertChildBefore()[0].firstElementChild.innerHTML).to.be.a('string').that.is.equal('Hi!');
+      });
+      it('Expects view.Ccc.$().insertChildBefore(newChild, child) to insert newChild as the first child.', () => {
+        const wrapper = dom.window.document.createElement('div');
+        wrapper.innerHTML = '<h1>Hello!</h1>';
+        const newChild = wrapper.firstChild;
+        const child = view.Ccc.$('h1')[0];
+        view.Ccc.$().insertChildBefore(newChild, child);
+        expect(view.Ccc.$()[0].firstElementChild.innerHTML).to.be.a('string').that.is.equal('Hello!');
+      });
+    });
+
+    describe('Test the method Component.$().removeChild():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app58C'),
+      );
+      it('Expects view.Ccc.$().removeChild() to return an object with one child.', () => {
+        expect(view.Ccc.$().removeChild()[0].childElementCount).to.be.a('number').that.is.equal(1);
+      });
+      it('Expects view.Ccc.$().removeChild("firstChild") to return an object without child.', () => {
+        const firstChild = view.Ccc.$()[0].firstElementChild;
+        expect(view.Ccc.$().removeChild(firstChild)[0].childElementCount).to.be.a('number').that.is.equal(0);
+      });
+    });
+
+    describe('Test the method Component.$().replaceChild():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app58D'),
+      );
+      const newChild = dom.window.document.createElement('div');
+      newChild.className = 'newchild';
+      const o = view.Ccc.$();
+      const el = o[0];
+      const child = el.children[0];
+      it('Expects view.Ccc.$().replaceChild() not to replace any child.', () => {
+        expect(o.replaceChild()[0].children[0].classList.value).to.be.a('string').that.is.equal('title');
+      });
+
+      it('Expects view.Ccc.$().replaceChild(newChild, child) to replace child by newChild.', () => {
+        expect(o.replaceChild(newChild, child)[0].children[0].classList.value).to.be.a('string').that.is.equal('newchild');
+      });
+    });
+
+    describe('Test the method Component.$().children():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app58E'),
+      );
+      it('Expects view.Ccc.$().children() to return a DOM object that has a length of 1.', () => {
+        expect(view.Ccc.$().children().length).to.be.a('number').that.is.equal(1);
+      });
+    });
+
+    describe('Test the method Component.$().childIndex():', () => {
+      const view = Vizu.render(
+        '<Eee />',
+        { '<Eee />': Eee },
+        dom.window.document.getElementById('app58F'),
+      );
+      it('Expects view.Eee.$(".title").childIndex() to return a number equal to 0.', () => {
+        expect(view.Eee.$('.title').childIndex()).to.be.a('number').that.is.equal(0);
+      });
+      it('Expects view.Eee.$(".plus").childIndex() to return a number equal to 1.', () => {
+        expect(view.Eee.$('.plus').childIndex()).to.be.a('number').that.is.equal(1);
+      });
+    });
+
+    describe('Test the method Component.$().getRect():', () => {
+      const view = Vizu.render(
+        '<Ccc />',
+        { '<Ccc />': Ccc },
+        dom.window.document.getElementById('app58G'),
+      );
+      it('Expects view.Ccc.$().getRect() to return an object.', () => {
+        expect(view.Ccc.$().getRect()).to.be.an('object');
+      });
+      it('Expects this object to own the property "bottom".', () => {
+        expect(view.Ccc.$().getRect()).to.have.property('bottom').that.is.a('number');
+      });
+      it('Expects this object to own the property "height".', () => {
+        expect(view.Ccc.$().getRect()).to.have.property('height').that.is.a('number');
+      });
+      it('Expects this object to own the property "left".', () => {
+        expect(view.Ccc.$().getRect()).to.have.property('left').that.is.a('number');
+      });
+      it('Expects this object to own the property "right".', () => {
+        expect(view.Ccc.$().getRect()).to.have.property('right').that.is.a('number');
+      });
+      it('Expects this object to own the property "top".', () => {
+        expect(view.Ccc.$().getRect()).to.have.property('top').that.is.a('number');
+      });
+      it('Expects this object to own the property "width".', () => {
+        expect(view.Ccc.$().getRect()).to.have.property('width').that.is.a('number');
       });
     });
 
@@ -248,11 +452,11 @@ export default function(dom) {
       });
     });
 
-    describe('Test the method Component.$().getClassList/addClass/removeClass/toggleClass:', () => {
+    describe('Test the method Component.$().getClassList/addClass(es)/removeClass(es)/toggleClass:', () => {
       const view = Vizu.render(
         '<Ccc />',
         { '<Ccc />': Ccc },
-        dom.window.document.getElementById('app5A'),
+        dom.window.document.getElementById('app59A'),
       );
 
       it('Expects the method view.Ccc.$("h1").getClassList().value to return a string.', () => {
@@ -278,13 +482,40 @@ export default function(dom) {
         view.Ccc.$('h1').toggleClass('ccc');
         expect(view.Ccc.$('h1').getClassList()[1]).to.be.undefined;
       });
+
+      it('Expects the method view.Ccc.$("h1").addClasses("aaa") no to add new classes.', () => {
+        view.Ccc.$('h1').addClasses('aaa');
+        expect(view.Ccc.$('h1')[0].classList.value).to.be.equal('title');
+      });
+      it('Expects the method view.Ccc.$("h1").addClasses(["aaa", "bbb", "ccc"]) to add the classes "title aaa bbb ccc".', () => {
+        view.Ccc.$('h1').addClasses(['aaa', 'bbb', 'ccc']);
+        expect(view.Ccc.$('h1')[0].classList.value).to.be.equal('title aaa bbb ccc');
+      });
+      it('Expects the method view.Ccc.$("h1").removeClasses("aaa") no to remove any classes.', () => {
+        view.Ccc.$('h1').removeClasses('aaa');
+        expect(view.Ccc.$('h1')[0].classList.value).to.be.equal('title aaa bbb ccc');
+      });
+      it('Expects the method view.Ccc.$("h1").removeClasses(["aaa", "bbb", "ccc"]) to remove the classes "aaa bbb ccc".', () => {
+        view.Ccc.$('h1').removeClasses(['aaa', 'bbb', 'ccc']);
+        expect(view.Ccc.$('h1')[0].classList.value).to.be.equal('title');
+      });
+
+      it('Expects the method view.Ccc.$("h1").hasClass("title") to return true', () => {
+        expect(view.Ccc.$('h1').hasClass('title')).to.be.true;
+      });
+      it('Expects the method view.Ccc.$("h1").hasClass("titleXXX") to return false', () => {
+        expect(view.Ccc.$('h1').hasClass('titleXXX')).to.be.false;
+      });
+      it('Expects the method view.Ccc.$("h1").hasClass(["title"]) to return false', () => {
+        expect(view.Ccc.$('h1').hasClass(['title'])).to.be.false;
+      });
     });
 
     describe('Test the method Component.$().attr():', () => {
       const view = Vizu.render(
         '<Ccc />',
         { '<Ccc />': Ccc },
-        dom.window.document.getElementById('app5B'),
+        dom.window.document.getElementById('app59B'),
       );
       it('Expects the method $().attr() without any argument to return null.', () => {
         expect(view.Ccc.$().attr()).to.be.null;
@@ -302,15 +533,15 @@ export default function(dom) {
       const view = Vizu.render(
         '<Ccc />',
         { '<Ccc />': Ccc },
-        dom.window.document.getElementById('app5C'),
+        dom.window.document.getElementById('app59C'),
       );
       it('Expects the method $().attr("style", "color: blue") to set el.style.color to blue.', () => {
         view.Ccc.$().attr('style', 'color: blue');
-        expect(view.Ccc.$().getElement().style.color).to.be.a('string').that.is.equal('blue');
+        expect(view.Ccc.$()[0].style.color).to.be.a('string').that.is.equal('blue');
       });
       it('Expects the method $().removeAttr("style", "color: blue") to set el.style.color to an empty string.', () => {
         view.Ccc.$().removeAttr('style', 'color: blue');
-        expect(view.Ccc.$().getElement().style.color).to.be.a('string').that.is.empty;
+        expect(view.Ccc.$()[0].style.color).to.be.a('string').that.is.empty;
       });
       it('Expects the method $().removeAttr() without argument to return this.', () => {
         expect(view.Ccc.$().removeAttr()).to.be.an('object');
@@ -322,7 +553,7 @@ export default function(dom) {
       Vizu.render(
         '<Eee />',
         { '<Eee />': Eee },
-        dom.window.document.getElementById('app5D'),
+        dom.window.document.getElementById('app59D'),
       );
       it('Expects the component "Ddd" to be rendered.', () => {
         expect(true).to.be.true;

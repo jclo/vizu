@@ -43,6 +43,12 @@ const HTML = `
       <div id="app40"></div>
 
       <div id="app50"></div>
+      <div id="app50A"></div>
+      <div id="app50A1"></div>
+
+      <div id="app50B"></div>
+      <div id="app50B1"></div>
+
       <div id="app51"></div>
       <div id="app52"></div>
       <div id="app53"></div>
@@ -51,11 +57,19 @@ const HTML = `
       <div id="app56"></div>
       <div id="app57"></div>
       <div id="app58"></div>
+      <div id="app58A"></div>
+      <div id="app58B"></div>
+      <div id="app58C"></div>
+      <div id="app58D"></div>
+      <div id="app58E"></div>
+      <div id="app58F"></div>
+      <div id="app58G"></div>
+
       <div id="app59"></div>
-      <div id="app5A"></div>
-      <div id="app5B"></div>
-      <div id="app5C"></div>
-      <div id="app5D"></div>
+      <div id="app59A"></div>
+      <div id="app59B"></div>
+      <div id="app59C"></div>
+      <div id="app59D"></div>
 
       <div> id="app60"></div>
       <div> id="app61"></div>
@@ -69,7 +83,6 @@ Vizu.vdom = dom;
 
 
 // -- Local variables
-
 
 // -- Main
 describe('Vizu', () => {
