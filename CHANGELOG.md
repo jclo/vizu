@@ -6,7 +6,7 @@
   * Added the methods $().clone, $().insertChildBefore(), $().removeChild, $().replaceChild,
   * Added the methods $().children, $().childrenIndex, $().getRect(),
   * Added the methods $().addClasses, $().removeClasses, $().hasClass,
-  * ...,
+  * Release.
 
 
 ### 0.0.7 (August 4, 2017)

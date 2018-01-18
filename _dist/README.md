@@ -12,7 +12,7 @@
 
 ## A Javascript View library for building web and hybrid mobile applications
 
-`Vizu` allows the user to create and aggregate `Vizu Web Components` and then render and manipulate them. It offers a similar API as `React` but `Vizu` directly writes to the DOM and it is much more lighter.
+`Vizu` allows the user to create and aggregate `Vizu Web Components` and then render and manipulate them. It offers a similar API as `React` but `Vizu` directly writes to the DOM and it is much more lighter. As `Vizu` provides a set of methods to manipulate the component's childs in the DOM tree (incremental DOM), it doesn't need a virtual DOM.
 
 `Vizu` introduces only two concepts: `Vizu Web Components` and `view`. A `Vizu Web Component` is a Javascript object that defines an HTML block and methods to manipulate it. A `view` is the aggregation of `Vizu Web Components`.
 
