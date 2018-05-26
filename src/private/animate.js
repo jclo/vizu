@@ -1,5 +1,5 @@
 /* global */
-/* eslint one-var: 0 */
+/* eslint one-var: 0, semi-style: 0, prefer-destructuring: 0 */
 
 // -- Vendor modules
 
@@ -162,7 +162,8 @@ export default {
           lapseOfTime,
           props[props.name[i]].initial,
           props[props.name[i]].change,
-          duration) + props[props.name[i]].suffix;
+          duration,
+        ) + props[props.name[i]].suffix;
       }
     }, delay);
   },

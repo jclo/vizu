@@ -1,12 +1,12 @@
-/* eslint one-var: 0 */
+/* eslint one-var: 0, semi-style: 0 */
 
 // -- Node modules
 
 // -- Local modules
 
 // -- Local constants
-const name    = require('../package.json').name
-    , release = require('../package.json').version
+const { name } = require('../package.json')
+    , release  = require('../package.json').version
     ;
 
 // -- Configuration file for Gulp
@@ -14,12 +14,21 @@ module.exports = {
   name,
   release,
   dist: './_dist',
-  srcfile: './index.js',
   lib: './lib',
-  exportname: 'Vizu',   // the name to expose outside the lib,
-  debug: true,
+  // Specific to browserify:
+  browserify: {
+    app: './index',
+    debug: false,
+    exportname: 'Vizu', // Name to expose outside the lib,
+  },
   babel: {
-    presets: ['latest'],
+    presets: [
+      ['env', {
+        targets: {
+          browsers: ['last 2 versions', 'ie 9'],
+        },
+      }],
+    ],
     plugins: ['add-module-exports'],
     env: {
       test: {

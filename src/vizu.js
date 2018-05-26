@@ -2,7 +2,7 @@
 /* eslint indent: ["error", 2, { "VariableDeclarator": { "var": 1, "let": 1, "const": 2 } }] */
 /* eslint one-var: 0, no-param-reassign: 0, max-len: [1, 130],
   no-unused-expressions: ["error", { "allowTernary": true }], no-underscore-dangle: 0,
-  no-proto: 1, prefer-rest-params: 1 */
+  no-proto: 1, prefer-rest-params: 1, semi-style: 0, prefer-destructuring: 0 */
 
 // -- Vendor modules
 
@@ -122,7 +122,8 @@ const _inherits = function(subClass, superClass) {
       enumerable: false,
       writable: true,
       configurable: true,
-    } });
+    },
+  });
 
   if (superClass) {
     Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;

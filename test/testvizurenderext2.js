@@ -16,7 +16,6 @@ import { Vizu, Component } from '../index';
 
 // Create a few Web Components:
 class Aaa extends Component {
-
   getInitialState() {
     this.props.options.title = 'Hi!';
   }
@@ -31,7 +30,6 @@ class Aaa extends Component {
 }
 
 class Bbb extends Component {
-
   getInitialState() {
     this.props.options.title = 'Hi!';
   }
@@ -46,7 +44,6 @@ class Bbb extends Component {
 }
 
 class Ccc extends Component {
-
   getInitialState() {
     this.props.options.title = 'Hi!';
   }
@@ -61,7 +58,6 @@ class Ccc extends Component {
 }
 
 class Ddd extends Component {
-
   getInitialState() {
     this.props.options.title = 'Hi!';
   }

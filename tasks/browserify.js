@@ -1,5 +1,5 @@
 /* eslint one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0,
-  max-len: [1, 130, 0] */
+  max-len: [1, 130, 0], semi-style: 0, object-curly-newline: 0 */
 /* eslint strict: 0 */
 
 'use strict';
@@ -23,15 +23,14 @@ const config = require('./config')
   ;
 
 // -- Local constants
-const srcfile    = config.srcfile
-    , babel      = config.babel
-    , debug      = config.debug
-    , exportname = config.exportname
-    , name       = config.name
-    , release    = config.release
-    , lib        = config.lib
+const { lib } = config
+    , { name } = config
+    , { release } = config
+    , { browserify: { app } } = config
+    , { browserify: { debug } } = config
+    , { browserify: { exportname } } = config
+    , { babel } = config
     ;
-
 
 // -- Local variables
 
@@ -49,8 +48,8 @@ gulp.task('removelib', function() {
 // Browserify:
 gulp.task('browserify-int', function() {
   // Set up the browserify instance.
-  const b = browserify({ entries: srcfile, debug, standalone: exportname })
-              .transform(babelify, { presets: babel.presets, plugins: babel.plugins });
+  const b = browserify({ entries: app, debug, standalone: exportname })
+    .transform(babelify, { presets: babel.presets, plugins: babel.plugins });
 
   return b.bundle()
     // Log errors if they happen.
@@ -65,7 +64,7 @@ gulp.task('browserify-int', function() {
     // Write .map file.
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(lib))
-    ;
+  ;
 });
 
 // Watchify:
@@ -73,8 +72,18 @@ gulp.task('watchify-int', function() {
   // Set up the browserify instance:
   // process.env.BROWSERIFYSWAP_ENV = 'dist';
   // process.env.NODE_ENV = 'production';
-  const b = browserify({ entries: srcfile, debug, standalone: exportname, cache: {}, packageCache: {}, plugin: [watchify] })
-              .transform(babelify, { presets: babel.presets, plugins: babel.plugins });
+  // const b = browserify({ entries: srcfile, debug, standalone: exportname, cache: {}, packageCache: {}, plugin: [watchify] })
+  //  .transform(babelify, { presets: babel.presets, plugins: babel.plugins });
+
+  const b = browserify({
+    entries: app,
+    debug,
+    standalone: exportname,
+    cache: {},
+    packageCache: {},
+    plugin: [watchify],
+  }).transform(babelify, { presets: babel.presets, plugins: babel.plugins });
+
 
   function build() {
     b.bundle()
@@ -91,7 +100,7 @@ gulp.task('watchify-int', function() {
       .pipe(sourcemaps.write('./'))
       // Write stream to destination path.
       .pipe(gulp.dest(lib))
-      ;
+    ;
   }
 
   // On any update, run the bundler and output build logs to the terminal.

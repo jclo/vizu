@@ -1,6 +1,7 @@
 /* global document */
 /* eslint indent: ["error", 2, { "VariableDeclarator": { "var": 1, "let": 1, "const": 2 } }] */
-/* eslint one-var: 0 */
+/* eslint one-var: 0, semi-style: 0 */
+
 // -- Vendor modules
 
 // -- Local modules
@@ -740,8 +741,8 @@ class Component {
    * @returns {String}  returns the web component,
    * @since 0.0.0
    */
-  /* istanbul ignore next */
   render() {
+    /* istanbul ignore next */
     return `<div>${this.id}</div>`;
   }
 
@@ -795,7 +796,7 @@ class Component {
    * @since 0.0.5
    */
   get evented() {
-    this.events();
+    return this.events();
   }
 }
 

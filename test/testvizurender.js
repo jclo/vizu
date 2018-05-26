@@ -1,5 +1,6 @@
 /* global describe, it */
-/* eslint import/no-extraneous-dependencies: 1, no-unused-expressions: 1 */
+/* eslint import/no-extraneous-dependencies: 1, no-unused-expressions: 1,
+  function-paren-newline: 1 */
 
 // -- Node modules
 import { expect } from 'chai';

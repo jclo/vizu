@@ -1,5 +1,5 @@
 /* global */
-/* eslint one-var: 0 */
+/* eslint one-var: 0, semi-style: 0 */
 
 // -- Vendor modules
 
