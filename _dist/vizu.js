@@ -1,5 +1,5 @@
 /** ****************************************************************************
- * Vizu v0.0.10alpha1
+ * Vizu v0.0.10
  *
  * A Javascript View library for building web and hybrid mobile applications.
  * (you can download it from npm or github repositories)
@@ -1425,7 +1425,7 @@ var Vizu = {
    * @returns {String}  returns the version of this library,
    */
   version: function version() {
-    return '0.0.10alpha1';
+    return '0.0.10';
   },
 
   /**

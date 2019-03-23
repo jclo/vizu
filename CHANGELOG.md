@@ -3,7 +3,7 @@
 ### 0.0.10 (March 23, 2019)
 
   * Updated the project to comply with Babel 7 and Gulp 4,
-  * ...,
+  * Release.
 
 
 ### 0.0.9 (May 26, 2018)
