@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint import/no-extraneous-dependencies: 1, no-unused-expressions: 1 */
+/* eslint import/no-extraneous-dependencies: 1, no-unused-expressions: 1, import/named: 0 */
 
 // -- Node modules
 import { expect } from 'chai';
@@ -20,6 +20,7 @@ class Aaa extends Component {
   getInitialState() {
     this.props.options = 'Aaa';
   }
+
   render() {
     return `<div clas='aaa'>${this.props.options}</div>`;
   }
@@ -29,6 +30,7 @@ class Bbb extends Component {
   getInitialState() {
     this.props.options = 'Bbb';
   }
+
   render() {
     return `<div class='bbb'>${this.props.options}</div>`;
   }

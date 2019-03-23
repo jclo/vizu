@@ -1,4 +1,4 @@
-import Component from './src/component';
 import Vizu from './src/vizu';
+import Component from './src/component';
 
-export default { Component, Vizu };
+export default { Vizu, Component };

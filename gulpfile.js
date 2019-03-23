@@ -1,40 +1,32 @@
-/* eslint indent: ["error", 2, { "VariableDeclarator": { "var": 1, "let": 1, "const": 2 } }] */
-/* eslint one-var: 0, prefer-arrow-callback: 0*/
-/* eslint strict: 0 */
+/* eslint-env node */
+/* eslint one-var: 0, semi-style: 0 */
 
-'use strict';
 
 // -- Node modules
-const gulp        = require('gulp')
-    , runSequence = require('run-sequence')
+const { watch, series } = require('gulp')
     ;
 
-// -- Local modules
-
 // -- Local constants
+const filesToWatch = 'src/**/*.js'
+    ;
 
 // -- Local variables
 
-// Include all build tasks:
-require('require-dir')('./tasks');
+// -- Gulp Private Tasks
+const { browserify } = require('./tasks/makejs')
+    , { watchify }   = require('./tasks/makejs')
+    , makedist       = require('./tasks/makedist')
+    ;
 
 
-// -- Gulp Public Tasks
+// -- Gulp watch
+function fwatch() {
+  watch(filesToWatch, series(watchify));
+}
 
-// Bundle all project JS and vendor JS file together:
-gulp.task('build', function(callback) {
-  runSequence('browserify', callback);
-});
 
-// Watch:
-gulp.task('watch', ['watchify']);
-
-// Make a distribution:
-gulp.task('makedist', function(callback) {
-  runSequence('skeleton', 'copyproject', callback);
-});
-
-// Build and then make a distribution:
-gulp.task('default', function(callback) {
-  runSequence('build', 'makedist', callback);
-});
+// Gulp Public Tasks:
+exports.build = browserify;
+exports.watch = fwatch;
+exports.makedist = makedist;
+exports.default = series(browserify, makedist);

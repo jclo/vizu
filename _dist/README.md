@@ -713,6 +713,6 @@ Vizu.createClass({
 [download-url]: https://www.npmjs.com/package/vizu
 [travis-url]: https://travis-ci.org/jclo/vizu
 [coveralls-url]: https://coveralls.io/github/jclo/vizu?branch=master
-[dependencies-url]: https://david-dm.org/jclo/vizu#info=dependencies
-[devdependencies-url]: https://david-dm.org/jclo/vizu#info=devDependencies
+[dependencies-url]: https://david-dm.org/jclo/vizu
+[devdependencies-url]: https://david-dm.org/jclo/vizu?type=dev
 [license-url]: http://opensource.org/licenses/MIT

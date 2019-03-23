@@ -1,5 +1,5 @@
 /* global describe */
-/* eslint  import/no-extraneous-dependencies: 1 */
+/* eslint  import/no-extraneous-dependencies: 1, import/named: 0 */
 
 // -- Node modules
 import { JSDOM } from 'jsdom';

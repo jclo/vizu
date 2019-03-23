@@ -1,16 +1,4 @@
-# Vizu
-
-[![NPM version][npm-image]][npm-url]
-[![Travis CI][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
-[![Dependencies status][dependencies-image]][dependencies-url]
-[![Dev Dependencies status][devdependencies-image]][devdependencies-url]
-[![License][license-image]](LICENSE.md)
-<!--- [![node version][node-image]][node-url] -->
-[![NPM install][npm-install-image]][npm-install-url]
-
-
-## A Javascript View library for building web and hybrid mobile applications
+# Guide
 
 `Vizu` allows the user to create and aggregate `Vizu Web Components` and then render and manipulate them. It offers a similar API as `React` but `Vizu` directly writes to the DOM and it is much more lighter. As `Vizu` provides a set of methods to manipulate the component's childs in the DOM tree (incremental DOM), it doesn't need a virtual DOM.
 
@@ -69,44 +57,6 @@ The method `Vizu.render()` renders the `Vizu Web Components` directly in the DOM
 
   * And finally, the third argument is the DOM element in which the view is inserted as a child element. If omitted, the view is directly inserted into the `body` as the first node.
 
-
-## Table of Contents
-
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Vizu](#vizu)
-	- [A Javascript View library for building web and hybrid mobile applications](#a-javascript-view-library-for-building-web-and-hybrid-mobile-applications)
-	- [Overview](#overview)
-		- [Create a Vizu Web Component](#create-a-vizu-web-component)
-		- [Create a View](#create-a-view)
-	- [Table of Contents](#table-of-contents)
-	- [Installation](#installation)
-	- [Create a View](#create-a-view)
-		- [The simplest View](#the-simplest-view)
-		- [A more concrete View](#a-more-concrete-view)
-		- [Résumé](#rsum)
-	- [Create a Vizu Web Component](#create-a-vizu-web-component)
-		- [The simplest Vizu Web Component](#the-simplest-vizu-web-component)
-		- [A more concrete Vizu Web Component](#a-more-concrete-vizu-web-component)
-		- [A Composite Vizu Web Component](#a-composite-vizu-web-component)
-		- [Define an Initial State for the Vizu Web Component](#define-an-initial-state-for-the-vizu-web-component)
-		- [Extend the Vizu Web Component with new methods](#extend-the-vizu-web-component-with-new-methods)
-		- [Create Vizu Web Component without ES6 classes](#create-vizu-web-component-without-es6-classes)
-		- [Résumé](#rsum)
-	- [Adds events to Vizu Web Component](#adds-events-to-vizu-web-component)
-	- [Interact with the Vizu Web Components](#interact-with-the-vizu-web-components)
-		- [The Variables](#the-variables)
-		- [The methods](#the-methods)
-	- [Replace a Vizu Web Component](#replace-a-vizu-web-component)
-	- [Reference](#reference)
-		- [Vizu Web Component](#vizu-web-component)
-			- [$()](#)
-		- [Vizu Render](#vizu-render)
-		- [Vizu Replace](#vizu-replace)
-		- [Vizu createClass](#vizu-createclass)
-	- [License](#license)
-
-<!-- /TOC -->
 
 ## Installation
 
@@ -690,29 +640,4 @@ Vizu.createClass({
 });
 ```
 
-
-## License
-
-[MIT](LICENSE.md).
-
-<!--- URls -->
-
-[npm-image]: https://img.shields.io/npm/v/vizu.svg?style=flat-square
-[npm-install-image]: https://nodei.co/npm/vizu.png?compact=true
-[node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
-[download-image]: https://img.shields.io/npm/dm/vizu.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/jclo/vizu.svg?style=flat-square
-[coveralls-image]: https://img.shields.io/coveralls/jclo/vizu/master.svg?style=flat-square
-[dependencies-image]: https://david-dm.org/jclo/vizu/status.svg?theme=shields.io
-[devdependencies-image]: https://david-dm.org/jclo/vizu/dev-status.svg?theme=shields.io
-[license-image]: https://img.shields.io/npm/l/vizu.svg?style=flat-square
-
-[npm-url]: https://www.npmjs.com/package/vizu
-[npm-install-url]: https://nodei.co/npm/vizu
-[node-url]: http://nodejs.org/download
-[download-url]: https://www.npmjs.com/package/vizu
-[travis-url]: https://travis-ci.org/jclo/vizu
-[coveralls-url]: https://coveralls.io/github/jclo/vizu?branch=master
-[dependencies-url]: https://david-dm.org/jclo/vizu
-[devdependencies-url]: https://david-dm.org/jclo/vizu?type=dev
-[license-url]: http://opensource.org/licenses/MIT
+Enjoy!
